@@ -1,12 +1,26 @@
 \chapter{Il contesto aziendale}
 \label{chap:contesto-aziendale}
 \section{Metodologia aziendale}
-Di seguito vengono elencate alcune informazioni utili relative alla metodologia aziendale applicata
-per lo sviluppo software e la gestione del reparto di stampa 3D.
+Spazio Dev è un'azienda di piccole dimensioni, di recente fondazione e ancora in fase di crescita, di conseguenza il progetto è stato sviluppato con budget limitato e da una singola persona.
+I processi di sviluppo aziendali, pertanto, sono ancora in rapida evoluzione.
 \subsection{Sviluppo software}
-Spazio Dev è una azienda giovane e di piccole dimensioni, il team di sviluppo è composto da 8 persone e ogni progetto aziendale
-viene sviluppato da piccoli gruppi di dipendenti o da persone singole.
 \subsubsection{Version Control System}
+L'azienda utilizza Git\footcite{site:git} come \gls{VersionControlSystemg} e Gitea\footcite{site:gitea} come piattaforma di hosting per i repository.
+Per quanto riguarda il \gls{GitBranchingModelg} viene adottato il Gitflow workflow\footcite{site:gitflow-workflow}, adattato nel seguente modo:
+\begin{itemize}
+    \item il branch dedicato alle versioni stabili è denominato \textit{main};
+    \item il branch dedicato alle versioni di sviluppo è denominato \textit{develop};
+    \item i branch dedicati alle implementazioni di \textit{feature} vengono denominati con lo schema \textit{feature/<nome\_feature>};
+    \item i branch dedicati ai \textit{bugfix} vengono denominati con lo schema \textit{fix/<nome\_bug>}.
+\end{itemize}
+Viene inoltre adottato lo standard \textit{Conventional Commits 1.0.0} per la scrittura dei messaggi di commit, in particolare
+ogni commit possiede un messaggio così formato: \textit{<tipo>: <descrizione>}, dove il parametro
+\textit{<tipo>} è:
+\begin{itemize}
+    \item \textit{fix} in caso di commit contenente \textit{bugfix};
+    \item \textit{feat} in caso di commit contenente \textit{feature}.
+\end{itemize}
+
 \subsubsection{Modello di lavoro agile}
 \subsubsection{Issue Tracking System}
 \subsection{Gestione della coda di stampa}

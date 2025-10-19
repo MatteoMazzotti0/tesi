@@ -10,10 +10,10 @@ Per quanto riguarda il \gls{GitBranchingModelg} viene adottato il Gitflow workfl
 \begin{itemize}
     \item il branch dedicato alle versioni stabili è denominato \textit{main};
     \item il branch dedicato alle versioni di sviluppo è denominato \textit{develop};
-    \item i branch dedicati alle implementazioni di \textit{feature} vengono denominati con lo schema \textit{feature/<nome\_feature>};
-    \item i branch dedicati ai \textit{bugfix} vengono denominati con lo schema \textit{fix/<nome\_bug>}.
+    \item i branch dedicati alle implementazioni di \gls{featureg} vengono denominati con lo schema \textit{feature/<nome\_feature>} dove il parametro \textit{<nome\_feature>} è una breve descrizione della \textit{feature} che si sta codificando;
+    \item i branch dedicati ai \gls{bugfixg} vengono denominati con lo schema \textit{fix/<nome\_bug>} dove il parametro \textit{<nome\_bug>} è una breve descrizione del \gls{bugg} che si sta risolvendo.
 \end{itemize}
-Viene inoltre adottato lo standard \textit{Conventional Commits 1.0.0} per la scrittura dei messaggi di commit, in particolare
+Viene inoltre adottato lo standard Conventional Commits 1.0.0\footcite{site:conventional-commits} per la scrittura dei messaggi di commit, in particolare
 ogni commit possiede un messaggio così formato: \textit{<tipo>: <descrizione>}, dove il parametro
 \textit{<tipo>} è:
 \begin{itemize}

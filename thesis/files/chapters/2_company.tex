@@ -8,20 +8,29 @@ I processi di sviluppo aziendali, pertanto, sono ancora in rapida evoluzione.
 L'azienda utilizza Git\footcite{site:git} come \gls{VersionControlSystemg} e Gitea\footcite{site:gitea} come piattaforma di hosting per i repository.
 Per quanto riguarda il \gls{GitBranchingModelg} viene adottato il Gitflow workflow\footcite{site:gitflow-workflow}, adattato nel seguente modo:
 \begin{itemize}
-    \item il branch dedicato alle versioni stabili è denominato \textit{main};
-    \item il branch dedicato alle versioni di sviluppo è denominato \textit{develop};
-    \item i branch dedicati alle implementazioni di \gls{featureg} vengono denominati con lo schema \textit{feature/<nome\_feature>} dove il parametro \textit{<nome\_feature>} è una breve descrizione della \textit{feature} che si sta codificando;
-    \item i branch dedicati ai \gls{bugfixg} vengono denominati con lo schema \textit{fix/<nome\_bug>} dove il parametro \textit{<nome\_bug>} è una breve descrizione del \gls{bugg} che si sta risolvendo.
+    \item il \textit{branch} dedicato alle versioni stabili è denominato \textit{main};
+    \item il \textit{branch} dedicato alle versioni di sviluppo è denominato \textit{develop};
+    \item i \textit{branch} dedicati alle implementazioni di \gls{featureg} vengono denominati con lo schema \textit{feature/<nome\_feature>} dove il parametro \textit{<nome\_feature>} è una breve descrizione della \textit{feature} che si sta codificando;
+    \item i \textit{branch} dedicati ai \gls{bugfixg} vengono denominati con lo schema \textit{fix/<nome\_bug>} dove il parametro \textit{<nome\_bug>} è una breve descrizione del \gls{bugg} che si sta risolvendo.
+    \item i \textit{branch} dedicati alla documentazione vengono denominati con lo schema \textit{docs/<nome\_documentazione>} dove il parametro \textit{<nome\_documentazione>} è una breve descrizione della modifica alla documentazione.
 \end{itemize}
 Viene inoltre adottato lo standard Conventional Commits 1.0.0\footcite{site:conventional-commits} per la scrittura dei messaggi di commit, in particolare
 ogni commit possiede un messaggio così formato: \textit{<tipo>: <descrizione>}, dove il parametro
 \textit{<tipo>} è:
 \begin{itemize}
     \item \textit{fix} in caso di commit contenente \textit{bugfix};
+    \item \textit{docs} in caso di commit di aggiornamento della documentazione;
     \item \textit{feat} in caso di commit contenente \textit{feature}.
 \end{itemize}
+Non sono state definite policy di protezione dei rami, requisiti di revisione o regole di merge, tali aspetti potranno tuttavia essere definiti in futuro dall'azienda.
 
 \subsubsection{Modello di lavoro agile}
+L'azienda adotta il framework Scrum\footcite{site:scrum-framework} come modello di lavoro agile\footcite{site:agile-manifesto}, in particolare:
+\begin{itemize}
+    \item Il ruolo di \gls{productOwnerg} viene ricoperto dai titolari dell'azienda i quali si occupano di creare e gestire il \gls{backlogg} del prodotto, fornire indicazioni al team su quali feature implementare e decidono le scadenze dei rilasci del prodotto;
+    \item Il ruolo di \gls{scrumMasterg} viene ricoperto dai titolari dell'azienda, i quali si occupano di pianificare \gls{sprintPlanningg}, \gls{dailyScrumg}, \gls{sprintReviewg} e \gls{sprintRetrospectiveg};
+    \item Il ruolo del team di sviluppo viene ricoperto dagli sviluppatori, i quali vengono divisi in gruppi e assegnati ai progetti in fase di sviluppo.
+\end{itemize}
 \subsubsection{Issue Tracking System}
 \subsection{Gestione della coda di stampa}
 \section{Cenni sul funzionamento della stampa additiva}

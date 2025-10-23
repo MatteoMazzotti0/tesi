@@ -1,9 +1,6 @@
 \PassOptionsToPackage{dvipsnames}{xcolor} % colori PDF/A
 
 \usepackage{colorprofiles}
-% PDF/A
-% validate in https://www.pdf-online.com/osa/validate.aspx
-\usepackage[a-1a,mathxmp]{pdfx}[2018/12/22]
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[italian]{babel}
@@ -15,7 +12,13 @@
 \usepackage{epigraph} % per epigrafi
 \usepackage{indentfirst} % rientra il primo paragrafo di ogni sezione
 \usepackage{graphicx} % immagini
-\usepackage[pdfa]{hyperref} % collegamenti ipertestuali
+\usepackage{hyperref} % collegamenti ipertestuali
+\usepackage{tagpdf}
+\tagpdfsetup{
+    activate-all=true,
+    interwordspace=true,
+    tabsorder=structure
+}
 \usepackage{mparhack,relsize}  % finezze tipografiche
 \usepackage{nameref} % visualizza nome dei riferimenti
 \usepackage[font=small]{quoting} % citazioni

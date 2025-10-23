@@ -23,3 +23,5 @@
 *.alg
 
 minted-caches
+svg-inkscape
+settings.json

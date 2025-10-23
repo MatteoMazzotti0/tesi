@@ -14,6 +14,14 @@ Per quanto riguarda il \gls{GitBranchingModelg} viene adottato il Gitflow workfl
     \item i \textit{branch} dedicati ai \gls{bugfixg} vengono denominati con lo schema \textit{fix/<nome\_bug>} dove il parametro \textit{<nome\_bug>} è una breve descrizione del \gls{bugg} che si sta risolvendo.
     \item i \textit{branch} dedicati alla documentazione vengono denominati con lo schema \textit{docs/<nome\_documentazione>} dove il parametro \textit{<nome\_documentazione>} è una breve descrizione della modifica alla documentazione.
 \end{itemize}
+
+\begin{figure}[H]
+  \centering
+  \includesvg[width=0.9\textwidth]{gitflow}
+  \caption{Funzionamento Gitflow Workflow}
+  \label{fig:gitflow}
+\end{figure}
+
 Viene inoltre adottato lo standard Conventional Commits 1.0.0\footcite{site:conventional-commits} per la scrittura dei messaggi di commit, in particolare
 ogni commit possiede un messaggio così formato: \textit{<tipo>: <descrizione>}, dove il parametro
 \textit{<tipo>} è:
@@ -31,8 +39,22 @@ L'azienda adotta il framework Scrum\footcite{site:scrum-framework} come modello 
     \item Il ruolo di \gls{scrumMasterg} viene ricoperto dai titolari dell'azienda, i quali si occupano di pianificare \gls{sprintPlanningg}, \gls{dailyScrumg}, \gls{sprintReviewg} e \gls{sprintRetrospectiveg};
     \item Il ruolo del team di sviluppo viene ricoperto dagli sviluppatori, i quali vengono divisi in gruppi e assegnati ai progetti in fase di sviluppo.
 \end{itemize}
+
+\begin{figure}[H]
+  \centering
+  \includesvg[width=\textwidth]{scrum} 
+  \caption{Framework Scrum}
+  \label{fig:scrum}
+\end{figure}
+
 \subsubsection{Issue Tracking System}
-\subsection{Gestione della coda di stampa}
-\section{Cenni sul funzionamento della stampa additiva}
-\subsection{}
+L'azienda utilizza Plane\footcite{site:plane} come sistema di tracciamento delle attività. 
+Le \gls{issueg} sono organizzate su una board in stile Kanban composta da cinque colonne:
+\begin{itemize}
+    \item \textit{Backlog}: raccolta iniziale delle attività proposte, non ancora pianificate;
+    \item \textit{Todo}: attività prioritarie selezionate per l'esecuzione;
+    \item \textit{In Progress}: attività in lavorazione;
+    \item \textit{In Review}: attività concluse e in fase di verifica;
+    \item \textit{Done}: attività completate.
+\end{itemize}
 \newpage

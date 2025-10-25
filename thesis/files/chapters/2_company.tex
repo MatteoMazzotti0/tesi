@@ -1,10 +1,9 @@
 \chapter{Il contesto aziendale}
 \label{chap:contesto-aziendale}
-\section{Metodologia aziendale}
+\section{Sviluppo software}
 Spazio Dev è un'azienda di piccole dimensioni, di recente fondazione e ancora in fase di crescita, di conseguenza il progetto è stato sviluppato con budget limitato e da una singola persona.
 I processi di sviluppo aziendali, pertanto, sono ancora in rapida evoluzione.
-\subsection{Sviluppo software}
-\subsubsection{Version Control System}
+\subsection{Version Control System}
 L'azienda utilizza Git\footcite{site:git} come \gls{VersionControlSystemg} e Gitea\footcite{site:gitea} come piattaforma di hosting per i repository.
 Per quanto riguarda il \gls{GitBranchingModelg} viene adottato il Gitflow workflow\footcite{site:gitflow-workflow}, adattato nel seguente modo:
 \begin{itemize}
@@ -32,7 +31,7 @@ ogni commit possiede un messaggio così formato: \textit{<tipo>: <descrizione>},
 \end{itemize}
 Non sono state definite policy di protezione dei rami, requisiti di revisione o regole di merge, tali aspetti potranno tuttavia essere definiti in futuro dall'azienda.
 
-\subsubsection{Modello di lavoro agile}
+\subsection{Modello di lavoro agile}
 L'azienda adotta il framework Scrum\footcite{site:scrum-framework} come modello di lavoro agile\footcite{site:agile-manifesto}, in particolare:
 \begin{itemize}
     \item Il ruolo di \gls{productOwnerg} viene ricoperto dai titolari dell'azienda i quali si occupano di creare e gestire il \gls{backlogg} del prodotto, fornire indicazioni al team su quali feature implementare e decidono le scadenze dei rilasci del prodotto;
@@ -46,7 +45,7 @@ L'azienda adotta il framework Scrum\footcite{site:scrum-framework} come modello 
   \label{fig:scrum}
 \end{figure}
 
-\subsubsection{Issue Tracking System}
+\subsection{Issue Tracking System}
 L'azienda utilizza Plane\footcite{site:plane} come sistema di tracciamento delle attività. 
 Le \gls{issueg} sono organizzate su una board in stile Kanban composta da cinque colonne:
 \begin{itemize}
@@ -73,4 +72,16 @@ La combinazione di colonna Kanban e priorità rende evidente sia lo stato di ava
   \label{fig:kanban}
 \end{figure}
 
+\subsection{Strumenti di comunicazione}
+Le comunicazioni interne avvengono interamente tramite Telegram\footcite{site:telegram}: 
+ogni progetto dispone di un gruppo dedicato in cui titolari e sviluppatori condividono aggiornamenti, 
+documentazione e decisioni operative in tempo reale. Questo canale unico permette di evitare dispersioni e di mantenere 
+traccia delle richieste provenienti dai clienti. 
+
+Le riunioni operative vengono organizzate con cadenza variabile, 
+in funzione delle necessità del progetto o delle scadenze concordate con i clienti. 
+Quando emergono nuove priorità o si avvicina un rilascio, i titolari convocano incontri mirati per allineare il team sugli obiettivi, 
+discutere eventuali impedimenti e definire le attività da pianificare nel successivo \textit{sprint}.
+
+%\section{Gestione della sala stampe}
 \newpage

@@ -83,5 +83,30 @@ in funzione delle necessità del progetto o delle scadenze concordate con i clie
 Quando emergono nuove priorità o si avvicina un rilascio, i titolari convocano incontri mirati per allineare il team sugli obiettivi, 
 discutere eventuali impedimenti e definire le attività da pianificare nel successivo \textit{sprint}.
 
-%\section{Gestione della sala stampe}
+\section{Gestione della sala stampe}
+Spazio Dev possiede attualmente molteplici punti di ingresso degli ordini relativi alla stampa 3D dei componenti, in particolare:
+\begin{itemize}
+  \item La vendita di vasi portafiori e complementi d'arredo viene effettuata online e sulla piattaforma e-commerce Amazon;
+  \item Le produzioni personalizzate e B2B vengono gestite manualmente.
+\end{itemize}
+Per la gestione di tali ordini e della coda di stampa viene utilizzato un gestionale sviluppato dall'azienda stessa, denominato "Idrotech Manager".
+\subsection{Ottimizzazione della coda di stampa}
+Per gestire in maniera efficiente l'evasione degli ordini l'azienda applica diverse ottimizzazioni alla coda di stampa, in modo tale da sfruttare nel miglior modo
+possibile le capacità di produzione.
+Tali procedure riguardano in particolare gli orari di avvio della stampa, la gestione dei cambi di materiale e dei cambi di ugello.
+\subsubsection{Orari di avvio della stampa}
+La gestione degli orari di avvio della stampa risulta fondamentale per ottimizzare al meglio la produzione.
+Ciò è dovuto al fatto che ogni stampante, quando termina la produzione di un piatto, necessita di un intervento manuale da parte di un operatore per la rimozione
+del prodotto finito e l'avvio della stampa successiva.
+L'idea alla base è quindi quella di pianificare tutte le stampe brevi durante l'orario lavorativo (in modo che sia sempre possibile avviare una nuova produzione),
+le stampe più lunghe vengono invece avviate poco prima della fine della giornata per sfruttare al meglio i periodi di tempo in cui non c'è personale presente all'interno dello stabilimento.
+\subsubsection{Cambi di materiale}
+La coda di stampa può essere ottimizzata riducendo al minimo i cambi di materiale (o colore) tra una stampa e quella successiva.
+Questo perchè ogni qual volta viene richiesto di cambiare il colore del filamento o il materiale utilizzato la stampa viene interrotta e un operatore deve intervenire manualmente
+per la sostituzione del filamento.
+Per semplicità, l'azienda assume che il tempo necessario per cambiare un filamento sia di 5 minuti.
+\subsubsection{Cambi ugello}
+Ogni articolo possiede uno specifico ugello che viene utilizzato per cambiare lo spessore della stampa.
+Come per i cambi di materiale anche il cambio ugello richiede un intervento manuale da parte di un operatore.
+Per semplicità, l'azienda assume che il tempo necessario per cambiare un filamento sia di 15 minuti.
 \newpage

@@ -2,13 +2,13 @@
 \label{chap:descrizione-stage}
 
 \section{Introduzione al progetto}
-Come descritto nella \nameref{chap:introduzione} il progetto codificato durante il periodo di stage curricolare è uno schedulatore automatico
+Come descritto nella introduzione (\ref{chap:introduzione}) il progetto codificato durante il periodo di stage curricolare è uno schedulatore automatico
 che ottimizza e riordina la coda di stampa a partire dagli ordini di produzione presenti all'interno del software gestionale Idrotech Manager.
-Tale schedulatore deve tenere conto delle ottimizzazioni descritte nella sezione \nameref{section:printing-management}, oltre a doversi integrare
+Tale schedulatore deve tenere conto delle ottimizzazioni descritte nella sezione dedicata (\ref{section:printing-management}), oltre a doversi integrare
 con il gestionale in utilizzo dal personale.
 
 \section{Analisi preventiva dei rischi}
-
+\label{section:risk-analysis}
 La prima fase dello stage curricolare è stata dedicata all'analisi preventiva dei rischi.
 Tale procedura ha lo scopo di delineare i possibili rischi a cui si può andare incontro durante lo sviluppo del progetto, oltre a 
 trovare delle possibili soluzioni per mitigare tali problematiche.
@@ -19,63 +19,76 @@ trovare delle possibili soluzioni per mitigare tali problematiche.
     \label{risk:tech-stack-choice} 
 \end{risk}
 
-\begin{risk}{Errata scelta delle tecnologie}
-    \riskdescription{una scelta errata delle tecnologie da utilizzare per la codifica del progetto potrebbe portare ad un risultato inutilizzabile o non abbastanza performante}
-    \risksolution{coinvolgimento del responsabile nella scelta e occupare il primo periodo per validare le idee proposte}
-    \label{risk:tech-stack-choice} 
+\begin{risk}{Sicurezza nella integrazione del modulo}
+    \riskdescription{la comunicazione tra il modulo da sviluppare e il gestionale esistente deve rispettare degli standard minimi di sicurezza, in modo che non tutti possano accedere alle \textit{API} esposte}
+    \risksolution{dedicare parte del tempo allo studio su come rendere più sicuro l'accesso alle rotte \textit{API}}
+    \label{risk:security} 
 \end{risk}
 
-\section{Requisiti e obiettivi}
+\begin{risk}{Risultati di ordinamento insoddisfacenti}
+    \riskdescription{il modulo potrebbe restituire risultati non soddisfacenti, con conseguenti inefficienze nella produzione}
+    \risksolution{validare assieme al tutor interno le logiche implementate in maniera periodica, testare il modulo con dataset realistici}
+    \label{risk:functioning} 
+\end{risk}
+
+\begin{risk}{Prestazioni dello schedulatore}
+    \riskdescription{il modulo potrebbe impiegare troppo tempo per ottimizzare la coda di stampa}
+    \risksolution{utilizzare un \gls{deployServerg} con buone prestazioni, velocizzare l'esecuzione diminuendo, ad esempio, il tempo disponibile per la ricerca di una soluzione ottima}
+    \label{risk:performance} 
+\end{risk}
+
+\begin{risk}{Rispetto delle scadenze}
+    \riskdescription{le tempistiche dello stage curricolare potrebbero non essere sufficienti per avere un risultato concreto e utilizzabile}
+    \risksolution{svolgere una pianificazione (\ref{section:stage-schedule}) accurata del periodo di tempo a disposizione e convalidare il raggiungimento degli obiettivi}
+    \label{risk:time} 
+\end{risk}
+
+\section{Pianificazione}
+\label{section:stage-schedule}
+Oltre all'analisi preventiva dei rischi (\ref{section:risk-analysis}) è stata svolta una pianificazione accurata di tutte le fasi del periodo di stage.
+Questo, oltre a mitigare il rischio "Rispetto delle scadenze" (\ref{risk:time}) serve a determinare i contenuti da revisionare al termine di ogni \textit{sprint}.
 
 \begin{center}
     \rowcolors{1}{}{tableGray}
-    \begin{longtable}{|p{2.25cm}|p{7.75cm}|p{2.25cm}|}
+    \begin{longtable}{|p{2.25cm}|p{8cm}|p{1cm}|}
     \hline
-    \multicolumn{1}{|c|}{\textbf{A}} & \multicolumn{1}{c|}{\textbf{B}}\\ 
+    \multicolumn{1}{|c|}{\textbf{Settimana}} & \multicolumn{1}{c|}{\textbf{Obiettivi}} & \multicolumn{1}{c|}{\textbf{Ore}}\\ 
     \hline 
     \endfirsthead
     \rowcolor{white}
-    \multicolumn{3}{c}{{\bfseries \tablename\ \thetable{} -- Continuo della tabella}}\\
+    \multicolumn{2}{c}{{\bfseries \tablename\ \thetable{} -- Continuo della tabella}}\\
     \hline
     \multicolumn{1}{|c|}{\textbf{A}} & \multicolumn{1}{c|}{B}\\ \hline 
     \endhead
     \hline
     \rowcolor{white}
-    \multicolumn{3}{|r|}{{Continua nella prossima pagina...}}\\
+    \multicolumn{2}{|r|}{{Continua nella prossima pagina...}}\\
     \hline
     \endfoot
     \endlastfoot 
     
-    AA & BB \\
+        1 & Analisi dei requisiti del progetto, scelta e inizio studio delle tecnologie. & 40 \\
     \hline
-    AA & BB \\
+        2 & Lettura della documentazione, studio del gestionale e progettazione delle integrazioni. & 40 \\
     \hline
-    AA & BB \\
+        3 & Inizio della codifica del progetto. & 40  \\
     \hline
-    AA & BB \\
+        4 & Codifica del progetto. & 40  \\
     \hline
+        5 & Codifica del progetto. & 40  \\
+    \hline
+        6 & Codifica del progetto. & 40  \\
+    \hline
+        7 & Codifica del progetto, validazione logiche implementate. & 40  \\
+    \hline
+        8 & Test dell'algoritmo con dataset realistici. & 20  \\
+    \hline
+
     \hiderowcolors
-    \caption{Lorem.}
-    \label{tab:requisiti_obbiettivi}
+    \caption{Tabella riassuntiva della pianificazione del periodo di stage.}
+    \label{tab:pianificazione}
     \end{longtable}
 \end{center}
 
-\section{Pianificazione}
-\begin{figure}[H]
-    \centering
-    \includegraphics[alt={Testo alternativo dell'immagine}, width=0.5\columnwidth]{img/pk_estate.jpeg}
-    \caption{Caption}
-    \label{fig:pk_estate_2}
-\end{figure}
-\lipsum[1]
-
-\subsection{subsection}
-\lipsum[1]
-
-\subsubsection{subsubsection}
-\lipsum[1]
-
-\paragraph{paragraph}
-\lipsum[1]
 
 \newpage

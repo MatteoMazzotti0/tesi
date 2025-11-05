@@ -1,59 +1,145 @@
 \chapter{Analisi dei requisiti}
 \label{chap:analisi-requisiti}
 \section{Casi d'uso}
-Per lo studio dei casi di utilizzo del prodotto sono stati creati dei diagrammi.
-I diagrammi dei casi d'uso (in inglese \textit{Use Case Diagram}) sono diagrammi di tipo \gls{uml} dedicati alla descrizione delle funzioni o servizi offerti da un sistema, così come sono percepiti e utilizzati dagli attori che interagiscono col sistema stesso.
-Essendo il progetto finalizzato alla creazione di un tool \gls{TermineSenzaAcronimo} per l'automazione di un processo, le interazioni da parte dell'utilizzatore devono essere ovviamente ridotte allo stretto necessario. Per questo motivo i diagrammi d'uso risultano semplici e in numero ridotto.
+Come descritto nella sezione \nameref{section:stage-schedule} la prima parte del periodo di stage è stata dedicata all'analisi dei requisiti del progetto.
+Prima di fare ciò sono stati definiti tutti i \textit{casi d'uso} del sistema.
+\subsection{Attori individuati}
+L'utente finale del sistema non utilizzerà direttamente il modulo di pianficazione, le sue funzionalità potranno essere messe a disposizione attraverso
+il software gestionale, per questo sono stati individuati due principali attori:
+\begin{itemize}
+    \item operatore, ovvero l'utente che interagisce con il software gestionale;
+    \item software gestionale, il quale interagisce con il modulo di pianificazione.
+\end{itemize}
 
+Trattandosi di un sistema con il compito di automatizzare un processo, il numero dei \textit{casi d'uso} risulta limitato.
+\subsection{Tabella dei casi d'uso}
+\tablefirsthead{\hline \textbf{Identificativo} & \textbf{Descrizione} \\ \hline}
+\tablehead{\hline \multicolumn{2}{r}{\small Continua...} \\ \hline
+           \textbf{Identificativo} & \textbf{Descrizione} \\ \hline}
+\tabletail{\hline \multicolumn{2}{r}{\small Continua...} \\ \hline}
+\tablelasttail{\hline}
+
+\tablefirsthead{
+  \hiderowcolors
+  \hline
+  \textbf{Identificativo} & \textbf{Descrizione} \\
+  \hline
+  \showrowcolors
+}
+\tablehead{
+  \hiderowcolors
+  \hline \multicolumn{2}{r}{\small Continua...} \\ \hline
+  \textbf{Identificativo} & \textbf{Descrizione} \\
+  \hline
+  \showrowcolors
+}
+\tabletail{
+  \hline \multicolumn{2}{r}{\small Continua...} \\ \hline
+}
+\tablelasttail{\hline}
+
+{
+\centering
+\rowcolors{2}{tableGray}{}
+
+\begin{supertabular}{|p{2.75cm}|p{8cm}|}
+\hline
+UC1 & \textit{Attori}: Gestionale.\newline
+      \textit{Scopo}: Ricevere una lista di ordini da pianificare dal software gestionale.\newline
+      \textit{Pre-condizione}: Endpoint raggiungibile, autenticazione valida e payload validato correttamente.\newline
+      \textit{Post-condizione}: Richiesta accettata e messa in coda per l'elaborazione. \\ \hline
+UC1.1 & \textit{Attori}: Gestionale.\newline
+      \textit{Scopo}: Calcolare un piano di stampa coerente con i vincoli.\newline
+      \textit{Pre-condizione}: Esiste una richiesta di schedulazione accettata.\newline
+      \textit{Post-condizione}: Piano di schedulazione prodotto e pronto all'invio. \\ \hline
+UC1.2 & \textit{Attori}: Gestionale.\newline
+      \textit{Scopo}: Notificare al gestionale l'esito della schedulazione. \newline
+      \textit{Pre-condizione}: Risultato disponibile, webhook del gestionale configurato e raggiungibile.\newline
+      \textit{Post-condizione}: Esito notificato e inviato al gestionale. \\ \hline
+UC1.E & \textit{Attori}: Gestionale.\newline
+      \textit{Scopo}: Comunicare un errore occorso in UC1 o UC1.1\newline
+      \textit{Pre-condizione}: Si è verificata un'anomalia (mancata autorizzazione, validazione dei dati fallita o altro).\newline
+      \textit{Post-condizione}: Errore tracciato e inviato al gestionale. \\ \hline
+UC2 & \textit{Attori}: Operatore.\newline
+     \textit{Scopo}: Consultare l'elenco dei risultati di schedulazione.\newline
+     \textit{Pre-condizione}: Schedulazioni precedenti presenti.\newline
+     \textit{Post-condizione}: Schedulazioni mostrate. \\ \hline
+UC2.1 & \textit{Attori}: Operatore.\newline
+       \textit{Scopo}: Visualizzare il piano su vista a calendario.\newline
+       \textit{Pre-condizione}: Almeno una schedulazione presente nel database.\newline
+       \textit{Post-condizione}: Calendario visualizzabile a schermo con gli slot pianificati. \\ \hline
+UC2.2 & \textit{Attori}: Operatore.\newline
+     \textit{Scopo}: Confermare l'accettazione della coda proposta.\newline
+     \textit{Pre-condizione}: Sezione dei dettagli della schedulazione aperta.\newline
+     \textit{Post-condizione}: Schedulazione marcata come accettata e importazione avvenuta nel calendario. \\ \hline
+UC2.E & \textit{Attori}: Operatore.\newline
+     \textit{Scopo}: Informare l'utente di errori avvenuti durante l'importazione a calendario.\newline
+     \textit{Pre-condizione}: Errore occorso in UC2.2.\newline
+     \textit{Post-condizione}: Errore comunicato e stato invariato. \\ \hline
+UC3 & \textit{Attori}: Operatore.\newline
+      \textit{Scopo}: Richiedere l'avvio della schedulazione automatica.\newline
+      \textit{Pre-condizione}: Operatore autenticato, sezione Ordini accessibile.\newline
+      \textit{Post-condizione}: Richiesta inviata al modulo e accettata. \\ \hline
+UC3.1 & \textit{Attori}: Operatore.\newline
+       \textit{Scopo}: Selezionare uno o più ordini da includere nella schedulazione.\newline
+       \textit{Pre-condizione}: Modale di selezione ordini aperto.\newline
+       \textit{Post-condizione}: Ordini da pianificare selezionati e pronti all'invio. \\ \hline
+UC3.2 & \textit{Attori}: Operatore.\newline
+       \textit{Scopo}: Informare dell'avvenuta accettazione della richiesta da parte del modulo.\newline
+       \textit{Pre-condizione}: Risposta positiva del modulo.\newline
+       \textit{Post-condizione}: Notifica visualizzata, modale chiuso. \\ \hline
+UC3.E & \textit{Attori}: Operatore\newline
+     \textit{Scopo}: Informare l'utente di errori incontrati durante l'avvio della schedulazione.\newline
+     \textit{Pre-condizione}: Errore occorso in UC3.\newline
+     \textit{Post-condizione}: Errore comunicato e stato invariato. \\ \hline
+
+\end{supertabular}
+\par
+}
+
+\subsection{Diagrammi dei casi d'uso}
 \begin{figure}[H]
-    \vspace{2em}
-    \centering
-    \includegraphics[alt={Testo alternativo dell'immagine}, width=0.75\columnwidth]{img/usecase/scenario-principale.jpeg}
-    \caption{Use Case 0: Scenario principale}
-    \label{fig:scenario_principale}
+  \centering
+  \includegraphics[alt={Diagramma dei casi d'uso UC1, UC1.1, UC1.2, UC1.E}, width=\textwidth]{img/usecase/1.png}
+  \caption{Diagramma dei casi d'uso UC1, UC1.1, UC1.2, UC1.E}
+  \label{fig:uc-first}
 \end{figure}
 
-\begin{usecase}{0}{Scenario principale}
-    \usecaseactors{Sviluppatore applicativi.}
-    \usecasepre{Lo sviluppatore è entrato nel plugin di simulazione all'interno dell'IDE.}
-    \usecasedesc{La finestra di simulazione mette a disposizione i comandi per configurare, registrare o eseguire un test.}
-    \usecasepost{Il sistema è pronto per permettere una nuova interazione.}
-    \label{uc:uc_scenario_principale}
-\end{usecase}
 
-\begin{usecase}{1}{Gestione Utente}
-    \usecaseactors{Amministratore, Utente Registrato.}
-    \usecasepre{L'utente deve essere autenticato nel sistema.}
-    \usecasedesc{L'utente può gestire le informazioni del proprio profilo.}
-    \usecasepost{Le modifiche vengono salvate nel sistema.}
-    \usecasealt{Se l'utente non è autenticato, visualizza un messaggio di errore.}
-    \label{uc:uc_casi_uso}
-\end{usecase}
 
-\begin{usecase}{2}{Creazione Prodotto}
-    \usecaseactors{Amministratore.}
-    \usecasepre{L'amministratore ha effettuato l'accesso al sistema.}
-    \usecasedesc{L'amministratore può aggiungere un nuovo prodotto al catalogo.}
-    \usecasepost{Il nuovo prodotto viene aggiunto con successo.}
-    \usecasealt{Se i campi obbligatori non sono compilati, visualizza un messaggio di errore.}
-    \label{uc:uc_creazione_prodotto}
-\end{usecase}
+\begin{figure}[H]
+  \centering
+  \includegraphics[alt={Diagramma dei casi d'uso UC2, UC2.1, UC2.2, UC2.E}, width=\textwidth]{img/usecase/2.png}
+  \caption{Diagramma dei casi d'uso UC2, UC2.1, UC2.2, UC2.E}
+  \label{fig:uc-second}
+\end{figure}
 
-\section{Tracciamento dei requisiti}
-Da un'attenta analisi dei requisiti e degli use case effettuata sul progetto è stata stilata la tabella che traccia i requisiti in rapporto agli use case.\\
-Sono stati individuati diversi tipi di requisiti e si è quindi fatto utilizzo di un codice identificativo per distinguerli.\\
-Il codice dei requisiti, dove ogni requisito è identificato con il carattere \textbf{R}, è così strutturato:
-\begin{enumerate}
-    \item[\textbf{F}:] Funzionale.
-    \item[\textbf{Q}:] Qualitativo.
-    \item[\textbf{V}:] Di vincolo.
-    \item[\textbf{N}:] Obbligatorio (necessario).
-    \item[\textbf{D}:] Desiderabile.
-    \item[\textbf{Z}:] Opzionale.
-\end{enumerate}
+\begin{figure}[H]
+  \centering
+  \includegraphics[alt={Diagramma dei casi d'uso UC3, UC3.1, UC3.2, UC3.E}, width=\textwidth]{img/usecase/4.png}
+  \caption{Diagramma dei casi d'uso UC3, UC3.1, UC3.2, UC3.E}
+  \label{fig:uc-third}
+\end{figure}
 
-Nelle tabelle \ref{tab:requisiti_funzionali}, \ref{tab:requisiti_qualitativi} e \ref{tab:requisiti_vincolo} sono riassunti i requisiti e il loro tracciamento con gli use case delineati in fase di analisi.
-
+\section{Analisi dei requisiti}
+Una volta stilata la lista dei \textit{casi d'uso} è stato possibile procedere con l'effettiva analisi dei requisiti del sistema.
+Tale operazione si è svolta attraverso un incontro con il tutor aziendale, durante il quale sono stati rilevati tutti i requisiti obbligatori, desiderabili e facoltativi.
+\subsection{Tracciamento dei requisiti}
+Ogni requisito viene identificato attraverso un codice identificativo di questo tipo:
+\begin{center}
+R.x.y
+\end{center}
+dove:
+\begin{itemize}
+  \item la lettera R identifica il requisito;
+  \item la lettera x identifica la tipologia di tale requisito, ovvero:
+ \begin{itemize}
+    \item O obbligatorio;
+    \item D desiderabile;
+    \item F facoltativo.
+  \end{itemize}
+  \item la lettera y è un valore numerico progressivo a partire da 0.
+\end{itemize}
 \section{Tabelle dei requisiti}
 \begin{table}[htbp]
     \centering
@@ -62,7 +148,7 @@ Nelle tabelle \ref{tab:requisiti_funzionali}, \ref{tab:requisiti_qualitativi} e 
     \hline
     \multicolumn{1}{|c|}{\textbf{Requisito}} & \multicolumn{1}{c|}{\textbf{Descrizione}} & \multicolumn{1}{c|}{\textbf{Use Case}}\\
     \hline
-    RFN-1 & L’interfaccia permette di configurare il tipo di sonde del test & UC1 \\
+    RFN-1 & L'interfaccia permette di configurare il tipo di sonde del test & UC1 \\
     \hline
     \end{tabular}
     \caption{Tabella del tracciamento dei requisiti funzionali.}

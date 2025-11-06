@@ -2,9 +2,9 @@
 \label{chap:analisi-requisiti}
 \section{Casi d'uso}
 Come descritto nella sezione \nameref{section:stage-schedule} la prima parte del periodo di stage è stata dedicata all'analisi dei requisiti del progetto.
-Prima di fare ciò sono stati definiti tutti i \textit{casi d'uso} del sistema.
+Prima di fare ciò sono stati definiti tutti i \gls{useCasesg} del sistema.
 \subsection{Attori individuati}
-L'utente finale del sistema non utilizzerà direttamente il modulo di pianficazione, le sue funzionalità potranno essere messe a disposizione attraverso
+L'utente finale del sistema non utilizzerà direttamente il modulo di pianificazione, le sue funzionalità potranno essere messe a disposizione attraverso
 il software gestionale, per questo sono stati individuati due principali attori:
 \begin{itemize}
     \item operatore, ovvero l'utente che interagisce con il software gestionale;
@@ -140,7 +140,9 @@ dove:
   \end{itemize}
   \item la lettera y è un valore numerico progressivo a partire da 0.
 \end{itemize}
+\newpage
 \section{Tabelle dei requisiti}
+\subsection{Tabella dei requisiti obbligatori}
 \begin{table}[htbp]
     \centering
     \rowcolors{1}{}{tableGray}
@@ -178,33 +180,46 @@ dove:
     \caption{Tabella del tracciamento dei requisiti obbligatori.}
     \label{tab:mandatory-requirements}
 \end{table}
-
+\newpage
+\subsection{Tabella dei requisiti desiderabili}
 \begin{table}[htbp]
     \centering
     \rowcolors{1}{}{tableGray}
     \begin{tabular}{|p{2.25cm}|p{10cm}|}
     \hline
     \multicolumn{1}{|c|}{\textbf{Requisito}} & \multicolumn{1}{c|}{\textbf{Descrizione}} \\
-    \hline 
-    RQD-1n & Le prestazioni del simulatore hardware deve garantire la giusta esecuzione dei test e non la generazione di falsi negativi \\
-    \hline  
+    \hline
+    RD0 & Deve essere disponibile un metodo di autenticazione per validare l'origine della richiesta delle schedulazioni.  \\
+    \hline
+    RD1 & Lo sviluppo deve avvenire utilizzando \gls{designPatterng} comprovati e producendo codice mantenibile per facilitare le modifiche future.\\
+    \hline
+    RD2 & La schedulazione proposta deve ottimizzare la stampa raggruppando i lavori con lo stesso ugello.\\
+    \hline
+    RD2 & La schedulazione proposta deve ottimizzare la stampa raggruppando i lavori con lo stesso colore.\\
+    \hline
+    RD3 & Al termine dello sviluppo l'algoritmo implementato deve essere validato utilizzando set di dati realistici.\\
+    \hline
     \end{tabular}
     \caption{Tabella del tracciamento dei requisiti desiderabili.}
     \label{tab:desirable-requirements}
 \end{table}
-
+\subsection{Tabella dei requisiti facoltativi}
 \begin{table}[htbp]
     \centering
     \rowcolors{1}{}{tableGray}
-    \begin{tabular}{|p{2.25cm}|p{7.75cm}|p{2.25cm}|}
+    \begin{tabular}{|p{2.25cm}|p{10cm}|}
     \hline
-    \multicolumn{1}{|c|}{\textbf{Requisito}} & \multicolumn{1}{c|}{\textbf{Descrizione}} & \multicolumn{1}{c|}{\textbf{Use Case}}\\
+    \multicolumn{1}{|c|}{\textbf{Requisito}} & \multicolumn{1}{c|}{\textbf{Descrizione}} \\
     \hline
-    RVO-1 & La libreria per l'esecuzione dei test automatici deve essere riutilizzabile & - \\
+    RF0 & La pianificazione deve avvenire automaticamente ad intervalli di tempo prefissati e modificabili dall'utente.  \\
+    \hline
+    RF1 & La pianificazione deve poter essere calcolata a partire da uno stato iniziale, schedulando solo i lavori mancanti.  \\
+    \hline
+    RF2 & L'utente deve essere in grado di modificare i parametri dello schedulatore dal software gestionale.  \\
     \hline
     \end{tabular}
-    \caption{Tabella del tracciamento dei requisiti di vincolo.}
-    \label{tab:requisiti_vincolo}
+    \caption{Tabella del tracciamento dei requisiti facoltativi.}
+    \label{tab:optional-requirements}
 \end{table}
 
 \newpage

@@ -144,39 +144,53 @@ dove:
 \begin{table}[htbp]
     \centering
     \rowcolors{1}{}{tableGray}
-    \begin{tabular}{|p{2.25cm}|p{7.75cm}|p{2.25cm}|}
+    \begin{tabular}{|p{2.25cm}|p{10cm}|}
     \hline
-    \multicolumn{1}{|c|}{\textbf{Requisito}} & \multicolumn{1}{c|}{\textbf{Descrizione}} & \multicolumn{1}{c|}{\textbf{Use Case}}\\
+    \multicolumn{1}{|c|}{\textbf{Requisito}} & \multicolumn{1}{c|}{\textbf{Descrizione}} \\
     \hline
-    RFN-1 & L'interfaccia permette di configurare il tipo di sonde del test & UC1 \\
+    RO0 & Il modulo deve produrre una coda di stampa dettagliata, evidenziando quale articolo stampare e quale stampante usare.\\
+    \hline 
+    RO1 & La schedulazione proposta deve considerare gli orari di lavoro aziendali. \\
+    \hline 
+    RO2 & La schedulazione proposta deve ottimizzare la stampa raggruppando i lavori con lo stesso materiale.  \\
+    \hline 
+    RO3 & La schedulazione proposta deve ottimizzare la stampa pianificando i lavori corti durante la giornata lavorativa.  \\
+    \hline 
+    RO4 & La schedulazione proposta deve ottimizzare la stampa pianificando i lavori lunghi al di fuori della giornata lavorativa.  \\
+    \hline 
+    RO5 & La schedulazione deve essere avviabile dal software gestionale esistente.  \\
+    \hline 
+    RO6 & La schedulazione deve essere visualizzabile dal software gestionale.  \\
+    \hline 
+    RO7 & La schedulazione deve essere importabile nel calendario del software gestionale.  \\
+    \hline 
+    RO8 & La schedulazione deve essere visibile in maniera chiara, in modo che l'utente possa trovare facilmente le informazioni utili.  \\
+    \hline 
+    RO9 & La soluzione deve essere ammissibile e non devono esserci lavori sovrapposti.\\
+    \hline 
+    RO10 & Tutti i pezzi da stampare devono essere inseriti nella pianificazione, non sono ammesse stampe parziali. \\
+    \hline 
+    RO11 & Deve essere considerato un tempo di cambio piatto tra una stampa e l'altra. \\
+    \hline 
+    RO12 & Deve essere considerato un tempo di cambio filamento tra un lavoro di stampa e il suo successivo se usano materiali diversi. \\
     \hline
     \end{tabular}
-    \caption{Tabella del tracciamento dei requisiti funzionali.}
-    \label{tab:requisiti_funzionali}
+    \caption{Tabella del tracciamento dei requisiti obbligatori.}
+    \label{tab:mandatory-requirements}
 \end{table}
 
 \begin{table}[htbp]
     \centering
     \rowcolors{1}{}{tableGray}
-    \begin{tabular}{|p{2.25cm}|p{7.75cm}|p{2.25cm}|}
+    \begin{tabular}{|p{2.25cm}|p{10cm}|}
     \hline
-    \multicolumn{1}{|c|}{\textbf{Requisito}} & \multicolumn{1}{c|}{\textbf{Descrizione}} & \multicolumn{1}{c|}{\textbf{Use Case}}\\
+    \multicolumn{1}{|c|}{\textbf{Requisito}} & \multicolumn{1}{c|}{\textbf{Descrizione}} \\
     \hline 
-    RQD-1n & Le prestazioni del simulatore hardware deve garantire la giusta esecuzione dei test e non la generazione di falsi negativi & - \\
-    \hline
-    RQD-1n & Le prestazioni del simulatore hardware deve garantire la giusta esecuzione dei test e non la generazione di falsi negativi & - \\
-    \hline
-    RQD-1n & Le prestazioni del simulatore hardware deve garantire la giusta esecuzione dei test e non la generazione di falsi negativi & - \\
-    \hline
-    RQD-1n & Le prestazioni del simulatore hardware deve garantire la giusta esecuzione dei test e non la generazione di falsi negativi & - \\
-    \hline
-    RQD-1n & Le prestazioni del simulatore hardware deve garantire la giusta esecuzione dei test e non la generazione di falsi negativi & - \\
-    \hline
-    RQD-1n & Le prestazioni del simulatore hardware deve garantire la giusta esecuzione dei test e non la generazione di falsi negativi & - \\
-    \hline
+    RQD-1n & Le prestazioni del simulatore hardware deve garantire la giusta esecuzione dei test e non la generazione di falsi negativi \\
+    \hline  
     \end{tabular}
-    \caption{Tabella del tracciamento dei requisiti qualitativi.}
-    \label{tab:requisiti_qualitativi}
+    \caption{Tabella del tracciamento dei requisiti desiderabili.}
+    \label{tab:desirable-requirements}
 \end{table}
 
 \begin{table}[htbp]

@@ -41,9 +41,32 @@ Server di tipo \gls{asgi} per applicazioni web Python asincrone. Utilizzato per 
 \subsection{Persistenza dei dati}
 \subsubsection{MySQL}
 Sistema di gestione di basi di dati relazionali usato per la persistenza. 
-Supporta transazioni e indici, ed è integrato con l'applicazione tramite \textit{m} per la definizione dello schema e l'accesso ai dati.
+Supporta transazioni e indici, ed è integrato con l'applicazione tramite \textit{orm} per la definizione dello schema e l'accesso ai dati.
 
-\section{Architettura del sistema}
+\section{Scelte implementative}
+\subsection{Progettazione della base di dati}
+\subsubsection{Base di dati del modulo di pianificazione}
+Assieme al tutor aziendale è stata presa la decisione di non utilizzare la base di dati del modulo di pianificazione per la persistenza dei risultati generati,
+questo perchè la coda di stampa viene visualizzata direttamente all'interno del software gestionale e risulta pertanto più semplice e intuitivo 
+modificare direttamente il \textit{database} di quest'ultimo.
+La base di dati del modulo di pianificazione ha il solo compito di memorizzare i \gls{clientg} registrati e autorizzati a chiamare le
+\textit{API} esposte, a tale scopo è stata creata una sola tabella denominata \textit{clients} e così strutturata:
+\begin{itemize}
+    \item \textit{id}: intero auto-incrementale utilizzato come chiave primaria, generato automaticamente dal \textit{database}.
+    \item \textit{client\_id}: stringa obbligatoria indicizzata e univoca che identifica il client registrato.
+    \item \textit{client\_secret}: stringa obbligatoria che contiene la password utilizzata dal client per l'autenticazione (vedi \ref{section:system-security}).
+    \item \textit{created\_at}: campo di tipo \textit{DateTime} per tracciare la data di registrazione.
+    \item \textit{is\_active}: valore booleano che indica se il client è abilitato, è valorizzato a \textit{true} di default.
+\end{itemize}
+Ciò permette, in futuro, di aggiungere eventuali altri \textit{client} autorizzati ad utilizzare il modulo.
+\subsubsection{Base di dati del software gestionale}
+La progettazione della base di dati è risultata fondamentale per permettere all'utente di visualizzare correttamente le code di stampa pianificate.
+Il software gestionale esistente (e già sviluppato al momento della codifica del progetto) possiede una base di dati già strutturata e utilizzata sia dall'azienda ospitante che da
+alcuni clienti dell'azienda stessa (in quanto il software è \gls{multitenantg}).
+Per questo motivo l'ampliamento della base di dati esistente è stato eseguito cercando di mantenere al minimo il numero di modifiche.
+
+
+\subsection{Architettura del sistema}
 Il \gls{architecturalDesignPatterng} scelto per la codifica del progetto è il \gls{layerPatterng}.
 Tale scelta è stata presa per le seguenti motivazioni:
 \begin{itemize}
@@ -53,4 +76,8 @@ Tale scelta è stata presa per le seguenti motivazioni:
     \item Permette una buona testabilità, ogni \textit{layer} può essere isolato e testato separatamente;
     \item Il progetto non richiede una elevata \gls{scalabilityg} del sistema.
 \end{itemize}
+\subsection{Design pattern adottati}
+\subsection{Struttura delle cartelle}
+\section{Sicurezza del sistema}
+\label{section:system-security}
 \newpage

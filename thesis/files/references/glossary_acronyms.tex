@@ -4,6 +4,9 @@
 \newacronym{uml}{UML}{Unified Modeling Language}
 \newacronym{tsa}{TSA}{Termine solo acronimo}
 \newacronym{poc}{POC}{Proof Of Concept}
+\newacronym{orm}{ORM}{Object-Relational Mapping}
+\newacronym{jwt}{JWT}{JSON Web Token}
+\newacronym{asgi}{ASGI}{Asynchronous Server Gateway Interface}
 
 % Glossary
 \newglossaryentry{apig}{
@@ -146,6 +149,34 @@
     description={Soluzione progettuale riutilizzabile che descrive come risolvere un problema ricorrente di design software, codificando ruoli, responsabilità e interazioni tra componenti per migliorare manutenibilità, flessibilità e comunicazione all'interno del team}
 }
 
+\newglossaryentry{architecturalDesignPatterng}{
+    name={Design pattern architetturale},
+    text={design pattern architetturale},
+    sort={design pattern architetturale},
+    description={Schema di alto livello che definisce composizione e interazione dei componenti di un sistema software per soddisfare requisiti non funzionali come scalabilità, resilienza o sicurezza, fornendo linee guida per strutturare l'intera architettura}
+}
+
+\newglossaryentry{layerPatterng}{
+    name={Pattern a layer},
+    text={pattern a layer},
+    sort={pattern a layer},
+    description={Design pattern architetturale che suddivide un sistema in strati indipendenti con responsabilità specifiche (es. presentazione, logica, accesso ai dati), così da ridurre le dipendenze e facilitare riuso, manutenzione e test}
+}
+
+\newglossaryentry{layerg}{
+    name={Layer},
+    text={layer},
+    sort={layer},
+    description={Strato logico dell'architettura che incapsula un insieme coerente di responsabilità e offre servizi attraverso interfacce ben definite agli strati adiacenti, limitando l'accoppiamento e favorendo la separazione delle preoccupazioni}
+}
+
+\newglossaryentry{scalabilityg}{
+    name={Scalabilità},
+    text={scalabilità},
+    sort={scalabilita},
+    description={Capacità di un sistema di sostenere carichi crescenti (utenti, dati o richieste) mantenendo livelli di servizio accettabili, adattando risorse hardware o struttura software tramite scaling verticale, orizzontale o elastico}
+}
+
 \newglossaryentry{deployServerg}{
     name={Server di deploy},
     text={server di deploy},
@@ -158,4 +189,60 @@
     text={casi d'uso},
     sort={casi d'uso},
     description={Descrizioni strutturate di come gli attori interagiscono con il sistema per raggiungere obiettivi specifici, evidenziando flussi principali, varianti ed esigenze funzionali che guidano l'analisi dei requisiti}
+}
+
+\newglossaryentry{frameworkg}{
+    name={Framework},
+    text={framework},
+    sort={framework},
+    description={Insieme coerente di componenti software riutilizzabili che fornisce struttura, astrazioni e convenzioni per sviluppare una specifica classe di applicazioni, velocizzando lo sviluppo e favorendo la consistenza del codice}
+}
+
+\newglossaryentry{codestyleg}{
+    name={Code style},
+    text={code style},
+    sort={code style},
+    description={Insieme di regole e convenzioni formali che disciplinano formattazione, nomenclatura e organizzazione del codice sorgente, così da mantenerlo leggibile e uniforme all'interno di un team}
+}
+
+\newglossaryentry{ormg}{
+    name={Object-Relational Mapping (ORM)},
+    text={Object-Relational Mapping (ORM)},
+    sort={object-relational mapping},
+    description={Tecnica che mappa oggetti e classi di un linguaggio orientato agli oggetti su tabelle e record di un database relazionale, consentendo di manipolare i dati tramite codice anziché query SQL esplicite}
+}
+
+\newglossaryentry{jwttg}{
+    name={JSON Web Token (JWT)},
+    text={JSON Web Token (JWT)},
+    sort={json web token},
+    description={Standard aperto per la creazione di token JSON firmati e opzionalmente cifrati che rappresentano in modo sicuro affermazioni tra due parti, comunemente usato per autenticazione e scambio di informazioni tra servizi}
+}
+
+\newglossaryentry{combinatorialOptimizationg}{
+    name={Ottimizzazione combinatoria},
+    text={ottimizzazione combinatoria},
+    sort={ottimizzazione combinatoria},
+    description={Area dell'ottimizzazione che studia problemi in cui si cerca la soluzione migliore tra un insieme finito ma molto ampio di combinazioni discrete, tipicamente soggetti a vincoli (es. scheduling, routing, assegnamento)}
+}
+
+\newglossaryentry{openSourceg}{
+    name={Open source},
+    text={open source},
+    sort={open source},
+    description={Modello di distribuzione del software in cui il codice sorgente è reso pubblico con una licenza che consente a chiunque di studiarlo, modificarlo e ridistribuirlo, favorendo collaborazione e trasparenza}
+}
+
+\newglossaryentry{deployg}{
+    name={Deploy},
+    text={deploy},
+    sort={deploy},
+    description={Processo di rilascio e messa in esercizio di un'applicazione su un ambiente target (test, staging, produzione), comprendendo packaging, distribuzione, configurazione e attivazione dei servizi necessari per renderla disponibile agli utenti}
+}
+
+\newglossaryentry{asgig}{
+    name={Asynchronous Server Gateway Interface (ASGI)},
+    text={Asynchronous Server Gateway Interface (ASGI)},
+    sort={asynchronous server gateway interface},
+    description={Specifiche che definiscono l'interfaccia tra server web e applicazioni Python asincrone, evoluzione non bloccante del WSGI che abilita applicazioni in tempo reale e protocolli multipli (HTTP, WebSocket)}
 }

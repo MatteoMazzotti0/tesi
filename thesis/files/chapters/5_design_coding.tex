@@ -1,40 +1,56 @@
 \chapter{Progettazione e codifica}
 \label{chap:progettazione-codifica}
-Breve introduzione al capitolo
-
+La fase di progettazione e ccodifica è stata la più significativa per il progetto, in quanto ha occupato la maggior parte del tempo a disposizione.
+Attraverso un incontro con il tutor aziendale sono stati definiti i \textit{framework} e le librerie da utilizzare per la codifica,
+inoltre sono state prese decisioni in merito all'architettura del sistema e ai \textit{design pattern} da utilizzare.
 \section{Tecnologie e strumenti}
 \label{sec:tecnologie-strumenti}
 Di seguito viene data una panoramica delle tecnologie e strumenti utilizzati.
+\subsection{Linguaggi e framework}
+\subsubsection{Python}
+Linguaggio di programmazione ad alto livello, orientato agli oggetti e adatto a sviluppare applicazioni distribuite.
+Viene utilizzato nello sviluppo web, nell'analisi dei dati, nel machine learning e nello sviluppo di automazioni.
+\subsubsection{FastAPI}
+\Gls{frameworkg} web per la codifica di \textit{API} basato su Python\footcite{site:python}.
+Offre elevate prestazioni, validazione dell'input attraverso l'utilizzo della libreria Pydantic\footcite{site:pydantic} e 
+documentazione automatica seguendo lo standard OpenAPI\footcite{site:openapi}.
+\subsection{Librerie}
+\subsubsection{Black}
+Libreria che permette di formattare il codice Python, utilizzata per imporre un \gls{codestyleg} unico e automatizzabile.
+\subsubsection{isort}
+Libreria che permette di formattare le importazioni delle librerie Python, utilizzata per imporre un \textit{codestyle} unico e automatizzabile.
+\subsubsection{SQLModel}
+Libreria che permette di interagire con basi di dati relazionali attraverso il codice scritto in Python con 
+la tecnica di programmazione \gls{orm}.
+\subsubsection{PyJWT}
+Libreria che permette di codificare e decodificare \gls{jwt}, utilizzati per autenticare utenti o servizi.
+\subsubsection{Pydantic}
+Libreria che aggiunge funzionalità legate alla validazione dei dati in Python, permette di definire con precisione la struttura dei dati
+e gestire i casi in cui si riceva un input non conforme alle aspettative.
 
-\subsection*{Tecnologia 1}
-Descrizione Tecnologia 1.
+\subsubsection{Google OR-Tools}
+Libreria che contiene strumenti per risolvere problemi di \gls{combinatorialOptimizationg}.
+Permette di modellare un problema attraverso diversi linguaggi di programmazione (C++, Python, C\# o Java) e utilizzare
+diversi risolutori commerciali o \gls{openSourceg}.
+\subsection{DevOps e server di deploy}
+\subsubsection{Docker}
+Piattaforma utilizzata per creare ambienti isolati e riproducibili dove eseguire le applicazioni. 
+Consente di standardizzare lo sviluppo locale e il \gls{deployg}, riducendo differenze tra ambienti e semplificando l'esecuzione dei servizi.
+\subsubsection{Uvicorn}
+Server di tipo \gls{asgi} per applicazioni web Python asincrone. Utilizzato per eseguire l'\textit{API} in sviluppo e in produzione, supporta la concorrenza.
+\subsection{Persistenza dei dati}
+\subsubsection{MySQL}
+Sistema di gestione di basi di dati relazionali usato per la persistenza. 
+Supporta transazioni e indici, ed è integrato con l'applicazione tramite \textit{m} per la definizione dello schema e l'accesso ai dati.
 
-\subsection*{Tecnologia 2}
-Descrizione Tecnologia 2
-
-\section{Ciclo di vita del software}
-\label{sec:ciclo-vita-software}
-
-\section{Progettazione}
-\label{sec:progettazione}
-
-\subsection{Namespace 1}
-Descrizione namespace 1.
-
-\section{Design Pattern utilizzati}
-
-\section{Codifica}
-Blocco di codice in C
-\begin{listing}[H]
-\begin{minted}{c}
-#include <stdio.h>
-int main() {
-    print("Hello, world!");
-    return 0;
-}
-\end{minted}
-\caption{Example of code}
-\label{listing:c}
-\end{listing}
-
+\section{Architettura del sistema}
+Il \gls{architecturalDesignPatterng} scelto per la codifica del progetto è il \gls{layerPatterng}.
+Tale scelta è stata presa per le seguenti motivazioni:
+\begin{itemize}
+    \item Permette una buona separazione delle responsabilità, ogni \textit{layer} non conosce infatti l'implementazione degli altri;
+    \item Permette una maggior semplicità di sviluppo, in quanto è un \textit{design pattern architetturale} conosciuto e di semplice comprensione;
+    \item Permette una buona manutenibilità del codice, ogni \textit{layer} non viene influenzato dai cambiamenti apportati ad altri layer (a patto che i \textit{contratti} tra i layer rimangano invariati);
+    \item Permette una buona testabilità, ogni \textit{layer} può essere isolato e testato separatamente;
+    \item Il progetto non richiede una elevata \gls{scalabilityg} del sistema.
+\end{itemize}
 \newpage

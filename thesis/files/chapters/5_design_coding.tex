@@ -65,6 +65,24 @@ Il software gestionale esistente (e già sviluppato al momento della codifica de
 alcuni clienti dell'azienda stessa (in quanto il software è \gls{multitenantg}).
 Per questo motivo l'ampliamento della base di dati esistente è stato eseguito cercando di mantenere al minimo il numero di modifiche.
 
+Sono state aggiunte due tabelle per tracciare gli output della pianificazione e il legame con gli ordini:
+\begin{itemize}
+    \item La tabella \textit{scheduling\_results} così formata:
+    \begin{itemize}
+    \item \textit{id}: intero auto-incrementale usato come chiave primaria;
+    \item \textit{user\_id}: chiave esterna verso la tabella \textit{users} contenente i dati degli utenti registrati;
+    \item \textit{data}: campo \textit{json} obbligatorio che memorizza il payload completo della soluzione;
+    \item \textit{is\_accepted}: boolean obbligatorio valorizzato di default a \textit{false} per indicare l'approvazione dell'utente;
+    \item \textit{created\_at}: campo di tipo \textit{DateTime} per tracciare la data di ricezione del risultato;
+    \item \textit{updated\_at}: campo di tipo \textit{DateTime} per tracciare la data dell'ultima modifica risultato.
+    \end{itemize}
+    \item La tabella \textit{scheduling\_results\_orders} così formata:
+    \begin{itemize}
+        \item \textit{id}: intero auto-incrementale usato come chiave primaria;
+        \item \textit{order\_id}: chiave esterna verso la tabella \textit{orders} contenente gli ordini ricevuti;
+        \item \textit{scheduling\_result\_id}: chiave esterna verso \textit{scheduling\_results}.
+    \end{itemize}
+\end{itemize}
 
 \subsection{Architettura del sistema}
 Il \gls{architecturalDesignPatterng} scelto per la codifica del progetto è il \gls{layerPatterng}.

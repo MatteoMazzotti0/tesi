@@ -1,8 +1,8 @@
 \chapter{Progettazione e codifica}
 \label{chap:progettazione-codifica}
 La fase di progettazione e ccodifica è stata la più significativa per il progetto, in quanto ha occupato la maggior parte del tempo a disposizione.
-Attraverso un incontro con il tutor aziendale sono stati definiti i \textit{framework} e le librerie da utilizzare per la codifica,
-inoltre sono state prese decisioni in merito all'architettura del sistema e ai \textit{design pattern} da utilizzare.
+Attraverso un incontro con il tutor aziendale sono stati definiti i \gls{frameworkg} e le librerie da utilizzare per la codifica,
+inoltre sono state prese decisioni in merito all'architettura del sistema e ai \gls{designPatterng} da utilizzare.
 \section{Tecnologie e strumenti}
 \label{sec:tecnologie-strumenti}
 Di seguito viene data una panoramica delle tecnologie e strumenti utilizzati.
@@ -11,7 +11,7 @@ Di seguito viene data una panoramica delle tecnologie e strumenti utilizzati.
 Linguaggio di programmazione ad alto livello, orientato agli oggetti e adatto a sviluppare applicazioni distribuite.
 Viene utilizzato nello sviluppo web, nell'analisi dei dati, nel machine learning e nello sviluppo di automazioni.
 \subsubsection{FastAPI}
-\Gls{frameworkg} web per la codifica di \textit{API} basato su Python\footcite{site:python}.
+\textit{Framework} web per la codifica di \textit{API} basato su Python\footcite{site:python}.
 Offre elevate prestazioni, validazione dell'input attraverso l'utilizzo della libreria Pydantic\footcite{site:pydantic} e 
 documentazione automatica seguendo lo standard OpenAPI\footcite{site:openapi}.
 \subsection{Librerie}
@@ -50,13 +50,13 @@ Assieme al tutor aziendale è stata presa la decisione di non utilizzare la base
 questo perchè la coda di stampa viene visualizzata direttamente all'interno del software gestionale e risulta pertanto più semplice e intuitivo 
 modificare direttamente il \textit{database} di quest'ultimo.
 La base di dati del modulo di pianificazione ha il solo compito di memorizzare i \gls{clientg} registrati e autorizzati a chiamare le
-\textit{API} esposte, a tale scopo è stata creata una sola tabella denominata \textit{clients} e così strutturata:
+\textit{API} esposte, a tale scopo è stata creata una sola tabella denominata \texttt{clients} e così strutturata:
 \begin{itemize}
-    \item \textit{id}: intero auto-incrementale utilizzato come chiave primaria, generato automaticamente dal \textit{database}.
-    \item \textit{client\_id}: stringa obbligatoria indicizzata e univoca che identifica il client registrato.
-    \item \textit{client\_secret}: stringa obbligatoria che contiene la password utilizzata dal client per l'autenticazione (vedi \ref{section:system-security}).
-    \item \textit{created\_at}: campo di tipo \textit{DateTime} per tracciare la data di registrazione.
-    \item \textit{is\_active}: valore booleano che indica se il client è abilitato, è valorizzato a \textit{true} di default.
+    \item \texttt{id}: intero auto-incrementale utilizzato come chiave primaria, generato automaticamente dal \textit{database}.
+    \item \texttt{client\_id}: stringa obbligatoria indicizzata e univoca che identifica il client registrato.
+    \item \texttt{client\_secret}: stringa obbligatoria che contiene la password utilizzata dal client per l'autenticazione (vedi \ref{section:system-security}).
+    \item \texttt{created\_at}: campo di tipo \texttt{DateTime} per tracciare la data di registrazione.
+    \item \texttt{is\_active}: valore booleano che indica se il client è abilitato, è valorizzato a \textit{true} di default.
 \end{itemize}
 Ciò permette, in futuro, di aggiungere eventuali altri \textit{client} autorizzati ad utilizzare il modulo.
 \subsubsection{Base di dati del software gestionale}
@@ -67,20 +67,20 @@ Per questo motivo l'ampliamento della base di dati esistente è stato eseguito c
 
 Sono state aggiunte due tabelle per tracciare gli output della pianificazione e il legame con gli ordini:
 \begin{itemize}
-    \item La tabella \textit{scheduling\_results} così formata:
+    \item La tabella \texttt{scheduling\_results} così formata:
     \begin{itemize}
-    \item \textit{id}: intero auto-incrementale usato come chiave primaria;
-    \item \textit{user\_id}: chiave esterna verso la tabella \textit{users} contenente i dati degli utenti registrati;
-    \item \textit{data}: campo \textit{json} obbligatorio che memorizza il payload completo della soluzione;
-    \item \textit{is\_accepted}: boolean obbligatorio valorizzato di default a \textit{false} per indicare l'approvazione dell'utente;
-    \item \textit{created\_at}: campo di tipo \textit{DateTime} per tracciare la data di ricezione del risultato;
-    \item \textit{updated\_at}: campo di tipo \textit{DateTime} per tracciare la data dell'ultima modifica risultato.
+    \item \texttt{id}: intero auto-incrementale usato come chiave primaria;
+    \item \texttt{user\_id}: chiave esterna verso la tabella \texttt{users} contenente i dati degli utenti registrati;
+    \item \texttt{data}: campo \texttt{json} obbligatorio che memorizza il payload completo della soluzione;
+    \item \texttt{is\_accepted}: boolean obbligatorio valorizzato di default a \textit{false} per indicare l'approvazione dell'utente;
+    \item \texttt{created\_at}: campo di tipo \texttt{DateTime} per tracciare la data di ricezione del risultato;
+    \item \texttt{updated\_at}: campo di tipo \texttt{DateTime} per tracciare la data dell'ultima modifica risultato.
     \end{itemize}
-    \item La tabella \textit{scheduling\_results\_orders} così formata:
+    \item La tabella \texttt{scheduling\_results\_orders} così formata:
     \begin{itemize}
-        \item \textit{id}: intero auto-incrementale usato come chiave primaria;
-        \item \textit{order\_id}: chiave esterna verso la tabella \textit{orders} contenente gli ordini ricevuti;
-        \item \textit{scheduling\_result\_id}: chiave esterna verso \textit{scheduling\_results}.
+        \item \texttt{id}: intero auto-incrementale usato come chiave primaria;
+        \item \texttt{order\_id}: chiave esterna verso la tabella \texttt{orders} contenente gli ordini ricevuti;
+        \item \texttt{scheduling\_result\_id}: chiave esterna verso \texttt{scheduling\_results}.
     \end{itemize}
 \end{itemize}
 
@@ -94,7 +94,36 @@ Tale scelta è stata presa per le seguenti motivazioni:
     \item Permette una buona testabilità, ogni \textit{layer} può essere isolato e testato separatamente;
     \item Il progetto non richiede una elevata \gls{scalabilityg} del sistema.
 \end{itemize}
+\subsubsection{Layer implementati}
+I \textit{layer} implementati all'interno del sistema sono i seguenti:
+\begin{itemize}
+    \item \textit{API layer}: rappresenta la logica che riceve le richieste HTTP e orchestra le chiamate ai servizi disponibili;
+    \item \textit{Business layer}: rappresenta la logica di business dell'applicazione, riceve i dati dall'\textit{API layer} ed effettua le operazioni necessarie;
+    \item \textit{Persistence layer}: rappresenta la connessione tra il \textit{business layer} e il \textit{database}, si occupa di eseguire le \textit{query} orchestrare l'utilizzo del \textit{object-relational mapper};
+    \item \textit{Database layer}: rappresenta il \textit{database} dell'applicativo, dove i dati sono salvati e prelevati. 
+\end{itemize}
+Ogni \textit{layer} interagisce solo con i \textit{layer} sottostanti, pertanto è stato adottato un approccio di tipo \textit{closed layer}.
 \subsection{Design pattern adottati}
+Qui vengono descritti i \textit{design pattern comportamentali} e di \textit{inversione del controllo} adottati. 
+\subsubsection{Inversione del controllo}
+È stato fatto utilizzo del sistema di \textit{Dependency Injection} messo a disposizione dal \textit{framework} FastAPI.
+In particolare il file jwt.py espone le rotte \texttt{/verifyToken} e \texttt{/token} e delega le operazioni di verifica e 
+generazione dei \textit{JSON Web Token} alle funzioni fornite dalla classe \texttt{JWTDependencies}. 
+Tramite l'oggetto \texttt{Depends} il router richiede le dipendenze \texttt{get\_verified\_payload} per verificare il \textit{token} e \texttt{get\_new\_token} per generarne uno nuovo, lasciando che FastAPI risolva e inietti gli oggetti necessari prima dell'esecuzione dell'endpoint. 
+Questo approccio sposta all'esterno la creazione delle dipendenze, permettendo di sostituire facilmente l'implementazione durante i test o in fase di configurazione dell'applicazione.
+\newpage
+\begin{listing}[H]
+\inputminted{python}{code/jwt.py}
+\caption{File jwt.py}
+\label{listing:jwt-py}
+\end{listing}
+\newpage
+\begin{listing}[H]
+\inputminted{python}{code/jwt_dependencies.py}
+\caption{Classe JWTDependencies}
+\label{listing:jwt-dependencies-py}
+\end{listing}
+\subsubsection{Design pattern comportamentali}
 \subsection{Struttura delle cartelle}
 \section{Sicurezza del sistema}
 \label{section:system-security}

@@ -1,5 +1,5 @@
 class JWTDependencies:
-    #Funzione che controlla il token e lancia una eccezione se non è valido
+    #Funzione che controlla il token e lancia un'eccezione se non è valido
     def get_verified_payload(
         self,
         credentials: HTTPAuthorizationCredentials = Security(HTTPBearer()),

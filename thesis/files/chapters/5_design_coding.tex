@@ -84,7 +84,9 @@ Sono state aggiunte due tabelle per tracciare gli output della pianificazione e 
     \end{itemize}
 \end{itemize}
 
-\subsection{Architettura del sistema}
+\subsection{Design pattern adottati}
+Qui vengono descritti i \textit{design pattern comportamentali} e di \textit{inversione del controllo} adottati.
+\subsubsection{Architettura del sistema}
 Il \gls{architecturalDesignPatterng} scelto per la codifica del progetto è il \gls{layerPatterng}.
 Tale scelta è stata presa per le seguenti motivazioni:
 \begin{itemize}
@@ -94,7 +96,6 @@ Tale scelta è stata presa per le seguenti motivazioni:
     \item Permette una buona testabilità, ogni \textit{layer} può essere isolato e testato separatamente;
     \item Il progetto non richiede una elevata \gls{scalabilityg} del sistema.
 \end{itemize}
-\subsubsection{Layer implementati}
 I \textit{layer} implementati all'interno del sistema sono i seguenti:
 \begin{itemize}
     \item \textit{API layer}: rappresenta la logica che riceve le richieste HTTP e orchestra le chiamate ai servizi disponibili;
@@ -103,15 +104,12 @@ I \textit{layer} implementati all'interno del sistema sono i seguenti:
     \item \textit{Database layer}: rappresenta il \textit{database} dell'applicativo, dove i dati sono salvati e prelevati. 
 \end{itemize}
 Ogni \textit{layer} interagisce solo con i \textit{layer} sottostanti, pertanto è stato adottato un approccio di tipo \textit{closed layer}.
-\subsection{Design pattern adottati}
-Qui vengono descritti i \textit{design pattern comportamentali} e di \textit{inversione del controllo} adottati. 
 \subsubsection{Inversione del controllo}
 È stato fatto utilizzo del sistema di \textit{Dependency Injection} messo a disposizione dal \textit{framework} FastAPI.
 In particolare il file jwt.py espone le rotte \texttt{/verifyToken} e \texttt{/token} e delega le operazioni di verifica e 
 generazione dei \textit{JSON Web Token} alle funzioni fornite dalla classe \texttt{JWTDependencies}. 
 Tramite l'oggetto \texttt{Depends} il router richiede le dipendenze \texttt{get\_verified\_payload} per verificare il \textit{token} e \texttt{get\_new\_token} per generarne uno nuovo, lasciando che FastAPI risolva e inietti gli oggetti necessari prima dell'esecuzione dell'endpoint. 
 Questo approccio sposta all'esterno la creazione delle dipendenze, permettendo di sostituire facilmente l'implementazione durante i test o in fase di configurazione dell'applicazione.
-\newpage
 \begin{listing}[H]
 \inputminted{python}{code/jwt.py}
 \caption{File jwt.py}
@@ -124,6 +122,24 @@ Questo approccio sposta all'esterno la creazione delle dipendenze, permettendo d
 \label{listing:jwt-dependencies-py}
 \end{listing}
 \subsubsection{Design pattern comportamentali}
+È stato usato lo \textit{strategy pattern} per definire una interfaccia per l'algoritmo di ordinamento.
+Tale scelta permetterà in futuro, se necessario, di riscrivere completamente la logica di schedulazione mantenendo la compatibilità con la restante logica 
+del modulo, a patto che venga implementata la stessa interfaccia.
+La definizione viene fornita nel file \texttt{ordering\_alg.py}.
+\begin{listing}[H]
+\inputminted{python}{code/ordering_alg.py}
+\caption{Interfaccia schedule\_jobs}
+\label{listing:ordering-alg-py}
+\end{listing}
+La lista dei parametri accettati è la seguente:
+\begin{itemize}
+    \item \texttt{jobs}: lista di lavori da pianificare;
+    \item \texttt{printers}: lista di stampanti disponibili;
+    \item \texttt{base\_datetime}: data e ora di riferimento da cui far partire la schedulazione;
+    \item \texttt{initial\_schedule}: eventuale risultato già calcolato da integrare;
+    \item \texttt{is\_last\_schedule}: valore booleano che indica se l'elaborazione corrente è l'ultima;
+    \item \texttt{future\_capacity\_by\_order}: dizionario opzionale con chiave l'identificativo dell'ordine e valore la capacità già riservata in pianificazioni future;
+\end{itemize}
 \subsection{Struttura delle cartelle}
 \section{Sicurezza del sistema}
 \label{section:system-security}

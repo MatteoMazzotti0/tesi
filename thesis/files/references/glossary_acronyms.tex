@@ -177,6 +177,27 @@
     description={Strato logico dell'architettura che incapsula un insieme coerente di responsabilità e offre servizi attraverso interfacce ben definite agli strati adiacenti, limitando l'accoppiamento e favorendo la separazione delle preoccupazioni}
 }
 
+\newglossaryentry{inversioneControllog}{
+    name={Inversione del controllo},
+    text={inversione del controllo},
+    sort={inversione del controllo},
+    description={Principio architetturale secondo cui un componente non istanzia né gestisce direttamente le proprie dipendenze ma delega a un contenitore o infrastruttura esterna la responsabilità di fornirle, riducendo l'accoppiamento e facilitando test e sostituzione delle implementazioni}
+}
+
+\newglossaryentry{dependencyInjectiong}{
+    name={Dependency Injection},
+    text={dependency injection},
+    sort={dependency injection},
+    description={Tecnica concreta che realizza l'inversione del controllo fornendo a un componente le istanze delle sue dipendenze attraverso costruttori, metodi o parametri, tipicamente orchestrata da un contenitore che risolve e configura gli oggetti richiesti}
+}
+
+\newglossaryentry{businessLogicg}{
+    name={Logica di business},
+    text={logica di business},
+    sort={logica di business},
+    description={Insieme delle regole applicative e delle trasformazioni sui dati che implementano i requisiti del dominio, orchestrando servizi, repository e validazioni per garantire coerenza funzionale indipendentemente da presentazione e persistenza}
+}
+
 \newglossaryentry{scalabilityg}{
     name={Scalabilità},
     text={scalabilità},
@@ -259,4 +280,11 @@
     text={Asynchronous Server Gateway Interface (ASGI)},
     sort={asynchronous server gateway interface},
     description={Specifiche che definiscono l'interfaccia tra server web e applicazioni Python asincrone, evoluzione non bloccante del WSGI che abilita applicazioni in tempo reale e protocolli multipli (HTTP, WebSocket)}
+}
+
+\newglossaryentry{makespang}{
+    name={Makespan},
+    text={makespan},
+    sort={makespan},
+    description={Intervallo temporale complessivo necessario per completare tutte le attività pianificate, pari alla differenza tra l'avvio del primo lavoro e la conclusione dell'ultimo all'interno della schedulazione}
 }

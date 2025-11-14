@@ -1,8 +1,7 @@
 \chapter{Progettazione e codifica}
 \label{chap:progettazione-codifica}
-La fase di progettazione e ccodifica è stata la più significativa per il progetto, in quanto ha occupato la maggior parte del tempo a disposizione.
-Attraverso un incontro con il tutor aziendale sono stati definiti i \gls{frameworkg} e le librerie da utilizzare per la codifica,
-inoltre sono state prese decisioni in merito all'architettura del sistema e ai \gls{designPatterng} da utilizzare.
+La fase di progettazione e codifica è stata la più significativa per il progetto in quanto ha occupato la maggior parte del tempo a disposizione.
+Attraverso un incontro con il tutor aziendale sono stati definiti i \gls{frameworkg} per la codifica e l'architettura del sistema.
 \section{Tecnologie e strumenti}
 \label{sec:tecnologie-strumenti}
 Di seguito viene data una panoramica delle tecnologie e strumenti utilizzati.
@@ -29,6 +28,7 @@ Libreria che aggiunge funzionalità legate alla validazione dei dati in Python, 
 e gestire i casi in cui si riceva un input non conforme alle aspettative.
 
 \subsubsection{Google OR-Tools}
+\label{library:or-tools}
 Libreria che contiene strumenti per risolvere problemi di \gls{combinatorialOptimizationg}.
 Permette di modellare un problema attraverso diversi linguaggi di programmazione (C++, Python, C\# o Java) e utilizzare
 diversi risolutori commerciali o \gls{openSourceg}.
@@ -41,11 +41,11 @@ Server di tipo \gls{asgi} per applicazioni web Python asincrone. Utilizzato per 
 \subsection{Persistenza dei dati}
 \subsubsection{MySQL}
 Sistema di gestione di basi di dati relazionali usato per la persistenza. 
-Supporta transazioni e indici, ed è integrato con l'applicazione tramite \textit{orm} per la definizione dello schema e l'accesso ai dati.
+Supporta transazioni e indici, ed è integrato con l'applicazione tramite \textit{ORM} per la definizione dello schema e l'accesso ai dati.
 
-\section{Scelte implementative}
-\subsection{Progettazione della base di dati}
-\subsubsection{Base di dati del modulo di pianificazione}
+\section{Progettazione della base di dati}
+\subsection{Base di dati del modulo di pianificazione}
+\label{planner-database}
 Assieme al tutor aziendale è stata presa la decisione di non utilizzare la base di dati del modulo di pianificazione per la persistenza dei risultati generati,
 questo perchè la coda di stampa viene visualizzata direttamente all'interno del software gestionale e risulta pertanto più semplice e intuitivo 
 modificare direttamente il \textit{database} di quest'ultimo.
@@ -59,7 +59,7 @@ La base di dati del modulo di pianificazione ha il solo compito di memorizzare i
     \item \texttt{is\_active}: valore booleano che indica se il client è abilitato, è valorizzato a \textit{true} di default.
 \end{itemize}
 Ciò permette, in futuro, di aggiungere eventuali altri \textit{client} autorizzati ad utilizzare il modulo.
-\subsubsection{Base di dati del software gestionale}
+\subsection{Base di dati del software gestionale}
 La progettazione della base di dati è risultata fondamentale per permettere all'utente di visualizzare correttamente le code di stampa pianificate.
 Il software gestionale esistente (e già sviluppato al momento della codifica del progetto) possiede una base di dati già strutturata e utilizzata sia dall'azienda ospitante che da
 alcuni clienti dell'azienda stessa (in quanto il software è \gls{multitenantg}).
@@ -84,28 +84,28 @@ Sono state aggiunte due tabelle per tracciare gli output della pianificazione e 
     \end{itemize}
 \end{itemize}
 
-\subsection{Design pattern adottati}
-Qui vengono descritti i \textit{design pattern comportamentali} e di \textit{inversione del controllo} adottati.
-\subsubsection{Architettura del sistema}
+\section{Design pattern adottati}
+Qui vengono descritti i \gls{designPatterng} comportamentali e di \gls{inversioneControllog} adottati.
+\subsection{Architettura del sistema}
 Il \gls{architecturalDesignPatterng} scelto per la codifica del progetto è il \gls{layerPatterng}.
 Tale scelta è stata presa per le seguenti motivazioni:
 \begin{itemize}
-    \item Permette una buona separazione delle responsabilità, ogni \textit{layer} non conosce infatti l'implementazione degli altri;
+    \item Permette una buona separazione delle responsabilità, ogni \gls{layerg} non conosce infatti l'implementazione degli altri;
     \item Permette una maggior semplicità di sviluppo, in quanto è un \textit{design pattern architetturale} conosciuto e di semplice comprensione;
     \item Permette una buona manutenibilità del codice, ogni \textit{layer} non viene influenzato dai cambiamenti apportati ad altri layer (a patto che i \textit{contratti} tra i layer rimangano invariati);
     \item Permette una buona testabilità, ogni \textit{layer} può essere isolato e testato separatamente;
-    \item Il progetto non richiede una elevata \gls{scalabilityg} del sistema.
+    \item Il progetto non richiede un'elevata \gls{scalabilityg} del sistema.
 \end{itemize}
 I \textit{layer} implementati all'interno del sistema sono i seguenti:
 \begin{itemize}
     \item \textit{API layer}: rappresenta la logica che riceve le richieste HTTP e orchestra le chiamate ai servizi disponibili;
     \item \textit{Business layer}: rappresenta la logica di business dell'applicazione, riceve i dati dall'\textit{API layer} ed effettua le operazioni necessarie;
-    \item \textit{Persistence layer}: rappresenta la connessione tra il \textit{business layer} e il \textit{database}, si occupa di eseguire le \textit{query} orchestrare l'utilizzo del \textit{object-relational mapper};
+    \item \textit{Persistence layer}: rappresenta la connessione tra il \textit{business layer} e il \textit{database}, si occupa di eseguire le \textit{query} orchestrare l'utilizzo del \textit{Object-Relational Mapper};
     \item \textit{Database layer}: rappresenta il \textit{database} dell'applicativo, dove i dati sono salvati e prelevati. 
 \end{itemize}
 Ogni \textit{layer} interagisce solo con i \textit{layer} sottostanti, pertanto è stato adottato un approccio di tipo \textit{closed layer}.
-\subsubsection{Inversione del controllo}
-È stato fatto utilizzo del sistema di \textit{Dependency Injection} messo a disposizione dal \textit{framework} FastAPI.
+\subsection{Inversione del controllo}
+È stato fatto utilizzo del sistema di \gls{dependencyInjectiong} messo a disposizione dal \textit{framework} FastAPI.
 In particolare il file jwt.py espone le rotte \texttt{/verifyToken} e \texttt{/token} e delega le operazioni di verifica e 
 generazione dei \textit{JSON Web Token} alle funzioni fornite dalla classe \texttt{JWTDependencies}. 
 Tramite l'oggetto \texttt{Depends} il router richiede le dipendenze \texttt{get\_verified\_payload} per verificare il \textit{token} e \texttt{get\_new\_token} per generarne uno nuovo, lasciando che FastAPI risolva e inietti gli oggetti necessari prima dell'esecuzione dell'endpoint. 
@@ -121,7 +121,7 @@ Questo approccio sposta all'esterno la creazione delle dipendenze, permettendo d
 \caption{Classe JWTDependencies}
 \label{listing:jwt-dependencies-py}
 \end{listing}
-\subsubsection{Design pattern comportamentali}
+\subsection{Design pattern comportamentali}
 È stato usato lo \textit{strategy pattern} per definire una interfaccia per l'algoritmo di ordinamento.
 Tale scelta permetterà in futuro, se necessario, di riscrivere completamente la logica di schedulazione mantenendo la compatibilità con la restante logica 
 del modulo, a patto che venga implementata la stessa interfaccia.
@@ -138,9 +138,288 @@ La lista dei parametri accettati è la seguente:
     \item \texttt{base\_datetime}: data e ora di riferimento da cui far partire la schedulazione;
     \item \texttt{initial\_schedule}: eventuale risultato già calcolato da integrare;
     \item \texttt{is\_last\_schedule}: valore booleano che indica se l'elaborazione corrente è l'ultima;
-    \item \texttt{future\_capacity\_by\_order}: dizionario opzionale con chiave l'identificativo dell'ordine e valore la capacità già riservata in pianificazioni future;
+    \item \texttt{future\_capacity\_by\_order}: dizionario opzionale con chiave l'identificativo dell'ordine e valore la capacità già riservata in pianificazioni future.
 \end{itemize}
-\subsection{Struttura delle cartelle}
+\subsection{Design pattern strutturali}
+È stato usato il \textit{repository pattern}, tale approccio consiste nel creare delle classi (\textit{repository}) dotate dei metodi necessari per leggere o scrivere
+il \textit{database}.
+L'adozione di questo \textit{design pattern} porta a diversi vantaggi, tra cui:
+\begin{itemize}
+    \item Semplifica la logica di accesso ai dati, esponendo una interfaccia consistente per la lettura e la scrittura;
+    \item Migliora la testabilità del sistema, in quanto ogni \textit{repository} può essere sostituito facilmente da un \textit{mock};
+    \item Migliora la pulizia e la leggibilità del codice;
+    \item Permette di ridurre il tempo necessario ad un eventuale cambio di \textit{database}, in quanto necessiterebbe solo di una riscrittura delle classi \textit{repository}.
+\end{itemize}
+\newpage
+\section{Struttura delle cartelle}
+La struttura delle cartelle adottata per il progetto è la seguente:
+\begin{itemize}
+    \item \texttt{Mugalab-Automation}: cartella principale, contiene i file relativi alle \textit{variabili d'ambiente}, alla configurazione di Docker, il file \texttt{requirements.txt}, utilizzato per tenere traccia di tutte le dipendenze del sistema e il file \texttt{.gitignore} che riferisce al \textit{version control system} quali elementi ignorare;
+    \begin{itemize}
+        \item \texttt{app}: cartella contenente tutto il codice sorgente;
+        \begin{itemize}
+            \item \texttt{api}: cartella contenente i file che dichiarano le rotte \textit{API};
+            \item \texttt{contexts}: cartella contenente i file che dichiarano gli oggetti utilizzati come contesto;
+            \item \texttt{db}: cartella che contiene i file che dichiarano i dati per la connessione con il \textit{database};
+            \item \texttt{dependencies}: cartella che contiene i file che dichiarano le classi e le funzioni utilizzate per effettuare \textit{dependency injection};
+            \item \texttt{interfaces}: cartella che contiene i file che dichiarano le interfacce;
+            \item \texttt{models}: cartella che contiene i file che dichiarano i \textit{modelli}, ovvero le classi che rappresentano le entità di dominio, validano i dati in ingresso e definiscono lo schema persistito nel database;
+            \item \texttt{repositories}: cartella che contiene i file che dichiarano i \textit{repository} usati per leggere e/o scrivere dati nel \textit{database};
+            \item \texttt{services}: cartella che contiene le classi che contengono tutta la \gls{businessLogicg} dell'applicazione.
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[alt={Struttura delle cartelle del progetto}, width=0.5\columnwidth]{img/struttura_cartelle.png}
+	\caption{Struttura delle cartelle del progetto}
+	\label{fig:folders-struct}
+\end{figure}
+
+\section{Lista dei modelli}
+In questa sezione vengono descritti tutti i \textit{modelli}.
+\subsection{Client}
+\subsubsection{Scopo del modello}
+Rappresenta un \textit{client} registrato e autorizzato ad utilizzare le rotte \textit{API} esposte dal sistema.
+La struttura di questo \textit{modello} definisce la tabella \texttt{clients} (vedi sezione \ref{planner-database}).
+\subsubsection{Definizione}
+\begin{listing}[H]
+\inputminted{python}{code/client.py}
+\caption{Definizione del model Client}
+\label{listing:model-client}
+\end{listing}
+\subsection{JWTConfig}
+\subsubsection{Scopo del modello}
+Questo \textit{modello} definisce ed espone la configurazione dei \textit{JSON Web Token}, in particolare definisce la chiave e l'algoritmo utilizzati per la firma e la scadenza in minuti.
+\subsubsection{Definizione}
+\begin{listing}[H]
+\inputminted{python}{code/jwt_config.py}
+\caption{Definizione del model JWTConfig}
+\label{listing:model-jwt-config}
+\end{listing}
+\subsection{ScheduleRequest}
+\subsubsection{Scopo del modello}
+Questo \textit{modello} definisce e valida la struttura del corpo della richiesta da inviare per richiedere una pianificazione.
+In particolare ogni richiesta deve contenere:
+\begin{itemize}
+    \item Una lista di \texttt{Order} (vedi \ref{model:order});
+    \item Una lista di \texttt{Printer} (vedi \ref{model:printer});
+    \item Un intero che specifica l'identificativo dell'utente che effettua la richiesta;
+    \item Una stringa che specifica il \textit{token} da utilizzare per l'invio dei dati al gestionale.
+\end{itemize}
+\subsubsection{Definizione}
+\begin{listing}[H]
+\inputminted{python}{code/schedule_request.py}
+\caption{Definizione del modello ScheduleRequest}
+\label{listing:model-schedule-request}
+\end{listing}
+\subsection{ScheduleResponse}
+\subsubsection{Scopo del modello}
+Questo \textit{modello} definisce e valida la struttura del corpo della risposta, contenente la pianificazione, inviata al gestionale una volta terminato il calcolo dei risultati.
+In particolare ogni risposta deve contenere:
+\begin{itemize}
+    \item Un risultato di tipo \texttt{SchedulingResult} (vedi \ref{model:scheduling-result})
+    \item Una lista di \texttt{Order} (vedi \ref{model:order});
+    \item Un intero che specifica l'identificativo dell'utente che deve ricevere la pianificazione.
+\end{itemize}
+\subsubsection{Definizione}
+\begin{listing}[H]
+\inputminted{python}{code/schedule_response.py}
+\caption{Definizione del modello ScheduleResponse}
+\label{listing:model-schedule-response}
+\end{listing}
+\subsection{PrinterSchedule}
+\label{model:printer-schedule}
+\subsubsection{Scopo del modello}
+Questo \textit{modello} definisce e valida la schedulazione proposta per una singola stampante.
+In particolare, ogni schedulazione deve contenere:
+\begin{itemize}
+    \item Una lista di \texttt{ScheduledJob} (vedi \ref{model:scheduled-job});
+    \item Un intero che indica i minuti di ritardo accumulati su quella specifica stampante;
+    \item Un intero che specifica il conteggio dei lavori pianificati su quella stampante.
+\end{itemize}
+\subsubsection{Definizione}
+\begin{listing}[H]
+\inputminted{python}{code/printer_schedule.py}
+\caption{Definizione del modello PrinterSchedule}
+\label{listing:model-printer-schedule}
+\end{listing}
+\subsection{ScheduledJob}
+\label{model:scheduled-job}
+\subsubsection{Scopo del modello}
+Questo \textit{modello} definisce e valida una singola istanza di un lavoro pianificato.
+In particolare ogni lavoro pianificato deve contenere:
+\begin{itemize}
+    \item Una stringa che indica il nome del lavoro;
+    \item Una stringa che indica il materiale;
+    \item Un oggetto di tipo \texttt{datetime} che indica data e ora di inizio del lavoro;
+    \item Un oggetto di tipo \texttt{datetime} che indica data e ora di fine del lavoro;
+    \item Un intero che indica la durata della stampa in minuti;
+    \item Un intero che indica il ritardo nella esecuzione del lavoro in minuti;
+    \item Un oggetto di tipo \texttt{Order} (vedi \ref{model:order});
+    \item Un oggetto di tipo \texttt{datetime} che la scadenza del lavoro;
+    \item Un oggetto di tipo \texttt{Plate} (vedi \ref{model:plate}).
+\end{itemize}
+\subsubsection{Definizione}
+\begin{listing}[H]
+\inputminted{python}{code/scheduled_job.py}
+\caption{Definizione del modello ScheduledJob}
+\label{listing:model-scheduled-job}
+\end{listing}
+\subsection{Summary}
+\label{model:summary}
+\subsubsection{Scopo del modello}
+Questo \textit{modello} definisce e valida le statistiche finali della pianificazione richiesta.
+In particolare ogni oggetto di tipo \texttt{Summary} deve contenere:
+\begin{itemize}
+    \item Un intero che indica il numero totale di minuti di ritardo;
+    \item Un intero che indica il numero totale di lavori pianificati;
+    \item Un intero che indica lo stato del solutore (in base al calcolo di una soluzione ottima, accettabile o non accettabile);
+    \item Un intero che indica il numero totale di cambi di materiale;
+    \item Un intero che indica il \gls{makespang} in minuti;
+\end{itemize}
+\subsubsection{Definizione}
+\begin{listing}[H]
+\inputminted{python}{code/summary.py}
+\caption{Definizione del modello Summary}
+\label{listing:model-summary}
+\end{listing}
+\subsection{Job}
+\label{model:job}
+\subsubsection{Scopo del modello}
+Questo \textit{modello} definisce e valida una singola istanza di un lavoro da pianificare.
+In particolare ogni oggetto di tipo \texttt{Job} deve contenere:
+\begin{itemize}
+    \item Una stringa che indica il nome del lavoro;
+    \item Un oggetto di tipo \texttt{time} che indica durata della stampa;
+    \item Un oggetto di tipo \texttt{Plate} (vedi \ref{model:plate});
+    \item Un oggetto di tipo \texttt{datetime} che indica la scadenza del lavoro;
+    \item Un oggetto di tipo \texttt{Order} (vedi \ref{model:order}).
+\end{itemize}
+\subsubsection{Definizione}
+\begin{listing}[H]
+\inputminted{python}{code/job.py}
+\caption{Definizione del modello Job}
+\label{listing:model-job}
+\end{listing}
+\subsection{Order}
+\label{model:order}
+\subsubsection{Scopo del modello}
+Questo \texttt{modello} definisce e valida una singola istanza di un ordine di produzione.
+In particolare ogni oggetto di tipo \texttt{Order} deve contenere:
+\begin{itemize}
+    \item Un intero che indica l'identificativo dell'ordine;
+    \item Un oggetto di tipo \texttt{date} che indica la scadenza dell'ordine;
+    \item Una stringa che indica il codice dell'ordine;
+    \item Un intero che indica i pezzi ordinati;
+    \item Un intero che indica i pezzi già stampati;
+    \item Un oggetto di tipo \texttt{PrinterWork} (vedi \ref{model:printer-work}).
+\end{itemize}
+\subsubsection{Definizione}
+\begin{listing}[H]
+\inputminted{python}{code/order.py}
+\caption{Definizione del modello Order}
+\label{listing:model-order}
+\end{listing}
+\subsection{Plate}
+\label{model:plate}
+\subsubsection{Scopo del modello}
+Questo \textit{modello} definisce e valida una singola istanza di un piatto di stampa.
+In particolare ogni oggetto di tipo \texttt{Plate} deve contenere:
+\begin{itemize}
+    \item Un intero che indica l'identificativo del piatto;
+    \item Un intero che indica il numero di pezzi presenti nel piatto;
+    \item Un oggetto di tipo \texttt{time} che indica il tempo necessario per stampare un piatto.
+\end{itemize}
+\subsubsection{Definizione}
+\begin{listing}[H]
+\inputminted{python}{code/plate.py}
+\caption{Definizione del modello Plate}
+\label{listing:model-plate}
+\end{listing}
+\subsection{PrinterMaterial}
+\label{model:printer-material}
+\subsubsection{Scopo del modello}
+Questo \textit{modello} valida e definisce una singola istanza di un materiale utilizzato per la stampa.
+In particolare ogni oggetto di tipo \texttt{PrinterMaterial} deve contenere:
+\begin{itemize}
+    \item Un intero che indica l'identificativo del materiale;
+    \item Una stringa che indica il nome del materiale.
+\end{itemize}
+\subsubsection{Definizione}
+\begin{listing}[H]
+\inputminted{python}{code/printer_material.py}
+\caption{Definizione del modello PrinterMaterial}
+\label{listing:model-printer-material}
+\end{listing}
+\subsection{PrinterWork}
+\label{model:printer-work}
+\subsubsection{Scopo del modello}
+Questo \textit{modello} valida e definisce una singola istanza di un articolo da stampare.
+In particolare ogni ogni oggetto di tipo \texttt{PrinterWork} deve contenere:
+\begin{itemize}
+    \item Un intero che indica l'identificativo dell'articolo;
+    \item Una stringa che indica il nome dell'articolo;
+    \item Un oggetto di tipo \texttt{PrinterMaterial} (vedi \ref{model:printer-material});
+    \item Una lista di oggetti di tipo \texttt{Plate} (vedi \ref{model:plate}) che indica i formati di piatti di stampa disponibili per l'articolo.
+\end{itemize}
+\subsubsection{Definizione}
+\begin{listing}[H]
+\inputminted{python}{code/printer_work.py}
+\caption{Definizione del modello PrinterWork}
+\label{listing:model-printer-work}
+\end{listing}
+\subsection{Printer}
+\label{model:printer}
+\subsubsection{Scopo del modello}
+Questo \textit{modello} definisce e valida una singola istanza di una stampante.
+In particolare ogni oggetto di tipo \texttt{Printer} deve contenere:
+\begin{itemize}
+    \item Un intero che indica l'identificativo della stampante;
+    \item Una stringa che indica il nome della stampante.
+\end{itemize}
+\subsubsection{Definizione}
+\begin{listing}[H]
+\inputminted{python}{code/printer.py}
+\caption{Definizione del modello Printer}
+\label{listing:model-printer}
+\end{listing}
+\subsection{SchedulingResult}
+\label{model:scheduling-result}
+\subsubsection{Scopo del modello}
+Questo \textit{modello} valida e definisce una risultato di schedulazione.
+In particolare ogni oggetto di tipo \texttt{SchedulingResult} deve contenere:
+\begin{itemize}
+    \item Un oggetto di tipo \texttt{Summary} (vedi \ref{model:summary});
+    \item Un dizionario che associa ad ogni stampante un oggetto di tipo \texttt{PrinterSchedule} (vedi \ref{model:printer-schedule})
+\end{itemize}
+\subsubsection{Definizione}
+\begin{listing}[H]
+\inputminted{python}{code/scheduling_result.py}
+\caption{Definizione del modello SchedulingResult}
+\label{listing:model-scheduling-result}
+\end{listing}
+\subsection{TaskVariable}
+\subsubsection{Scopo del modello}
+Questo \textit{modello} definisce una variabile utilizzata dalla libreria Google OR-Tools (vedi \ref{library:or-tools}) per identificare un lavoro da pianificare.
+In particolare ogni oggetto di tipo \texttt{TaskVariable} deve contenere:
+\begin{itemize}
+    \item Un oggetto di tipo \texttt{IntVar} che rappresenta l'istante di inizio del lavoro espresso in minuti rispetto all'orario di inizio della schedulazione;
+    \item Un oggetto di tipo \texttt{IntVar} che rappresenta l'istante di fine del lavoro espresso nello stesso riferimento temporale;
+    \item Un oggetto di tipo \texttt{IntVar} che agisce come variabile booleana per indicare se il lavoro è stato assegnato a una stampante;
+    \item Un oggetto di tipo \texttt{IntervalVar} che collega inizio, durata e fine della lavorazione e permette al solutore di imporre i vincoli di non sovrapposizione;
+    \item Una stringa che indica il materiale richiesto dal lavoro;
+    \item Un intero che indica la durata del lavoro in minuti;
+    \item Un intero che rappresenta la deadline del lavoro in minuti rispetto all'orario di inizio della schedulazione;
+    \item Un oggetto di tipo \texttt{Job} (vedi \ref{model:job}) che mantiene un riferimento al lavoro originale.
+\end{itemize}
+\subsubsection{Definizione}
+\begin{listing}[H]
+\inputminted{python}{code/task_variable.py}
+\caption{Definizione del modello TaskVariable}
+\label{listing:model-task-variable}
+\end{listing}
 \section{Sicurezza del sistema}
 \label{section:system-security}
 \newpage

@@ -9,6 +9,7 @@ Di seguito viene data una panoramica delle tecnologie e strumenti utilizzati.
 \subsubsection{Python}
 Linguaggio di programmazione ad alto livello, orientato agli oggetti e adatto a sviluppare applicazioni distribuite.
 Viene utilizzato nello sviluppo web, nell'analisi dei dati, nel machine learning e nello sviluppo di automazioni.
+Permette di installare e gestire le librerie attraverso pip, un gestore di pacchetti.
 \subsubsection{FastAPI}
 \textit{Framework} web per la codifica di \textit{API} basato su Python\footcite{site:python}.
 Offre elevate prestazioni, validazione dell'input attraverso l'utilizzo della libreria Pydantic\footcite{site:pydantic} e 
@@ -111,13 +112,13 @@ generazione dei \textit{JSON Web Token} alle funzioni fornite dalla classe \text
 Tramite l'oggetto \texttt{Depends} il router richiede le dipendenze \texttt{get\_verified\_payload} per verificare il \textit{token} e \texttt{get\_new\_token} per generarne uno nuovo, lasciando che FastAPI risolva e inietti gli oggetti necessari prima dell'esecuzione dell'endpoint. 
 Questo approccio sposta all'esterno la creazione delle dipendenze, permettendo di sostituire facilmente l'implementazione durante i test o in fase di configurazione dell'applicazione.
 \begin{listing}[H]
-\inputminted{python}{code/jwt.py}
+\inputminted[fontsize=\small, breaklines, bgcolor=mintedbackground, linenos=true]{python}{code/jwt.py}
 \caption{File jwt.py}
 \label{listing:jwt-py}
 \end{listing}
 \newpage
 \begin{listing}[H]
-\inputminted{python}{code/jwt_dependencies.py}
+\inputminted[fontsize=\small, breaklines, bgcolor=mintedbackground, linenos=true]{python}{code/jwt_dependencies.py}
 \caption{Classe JWTDependencies}
 \label{listing:jwt-dependencies-py}
 \end{listing}
@@ -127,14 +128,14 @@ Tale scelta permetterà in futuro, se necessario, di riscrivere completamente la
 del modulo, a patto che venga implementata la stessa interfaccia.
 La definizione viene fornita nel file \texttt{ordering\_alg.py}.
 \begin{listing}[H]
-\inputminted{python}{code/ordering_alg.py}
+\inputminted[fontsize=\small, breaklines, bgcolor=mintedbackground, linenos=true]{python}{code/ordering_alg.py}
 \caption{Interfaccia schedule\_jobs}
 \label{listing:ordering-alg-py}
 \end{listing}
 La lista dei parametri accettati è la seguente:
 \begin{itemize}
-    \item \texttt{jobs}: lista di lavori da pianificare;
-    \item \texttt{printers}: lista di stampanti disponibili;
+    \item \texttt{jobs}: \textit{array} di lavori da pianificare;
+    \item \texttt{printers}: \textit{array} di stampanti disponibili;
     \item \texttt{base\_datetime}: data e ora di riferimento da cui far partire la schedulazione;
     \item \texttt{initial\_schedule}: eventuale risultato già calcolato da integrare;
     \item \texttt{is\_last\_schedule}: valore booleano che indica se l'elaborazione corrente è l'ultima;
@@ -185,7 +186,7 @@ Rappresenta un \textit{client} registrato e autorizzato ad utilizzare le rotte \
 La struttura di questo \textit{modello} definisce la tabella \texttt{clients} (vedi sezione \ref{planner-database}).
 \subsubsection{Definizione}
 \begin{listing}[H]
-\inputminted{python}{code/client.py}
+\inputminted[fontsize=\small, breaklines, bgcolor=mintedbackground, linenos=true]{python}{code/client.py}
 \caption{Definizione del model Client}
 \label{listing:model-client}
 \end{listing}
@@ -194,38 +195,38 @@ La struttura di questo \textit{modello} definisce la tabella \texttt{clients} (v
 Questo \textit{modello} definisce ed espone la configurazione dei \textit{JSON Web Token}, in particolare definisce la chiave e l'algoritmo utilizzati per la firma e la scadenza in minuti.
 \subsubsection{Definizione}
 \begin{listing}[H]
-\inputminted{python}{code/jwt_config.py}
+\inputminted[fontsize=\small, breaklines, bgcolor=mintedbackground, linenos=true]{python}{code/jwt_config.py}
 \caption{Definizione del model JWTConfig}
 \label{listing:model-jwt-config}
 \end{listing}
 \subsection{ScheduleRequest}
 \subsubsection{Scopo del modello}
 Questo \textit{modello} definisce e valida la struttura del corpo della richiesta da inviare per richiedere una pianificazione.
-In particolare ogni richiesta deve contenere:
+In particolare ogni oggetto di tipo \texttt{ScheduleRequest} deve contenere:
 \begin{itemize}
-    \item Una lista di \texttt{Order} (vedi \ref{model:order});
-    \item Una lista di \texttt{Printer} (vedi \ref{model:printer});
+    \item Un \textit{array} di \texttt{Order} (vedi \ref{model:order});
+    \item Un \textit{array} di \texttt{Printer} (vedi \ref{model:printer});
     \item Un intero che specifica l'identificativo dell'utente che effettua la richiesta;
     \item Una stringa che specifica il \textit{token} da utilizzare per l'invio dei dati al gestionale.
 \end{itemize}
 \subsubsection{Definizione}
 \begin{listing}[H]
-\inputminted{python}{code/schedule_request.py}
+\inputminted[fontsize=\small, breaklines, bgcolor=mintedbackground, linenos=true]{python}{code/schedule_request.py}
 \caption{Definizione del modello ScheduleRequest}
 \label{listing:model-schedule-request}
 \end{listing}
 \subsection{ScheduleResponse}
 \subsubsection{Scopo del modello}
 Questo \textit{modello} definisce e valida la struttura del corpo della risposta, contenente la pianificazione, inviata al gestionale una volta terminato il calcolo dei risultati.
-In particolare ogni risposta deve contenere:
+In particolare ogni oggetto di tipo \texttt{ScheduleResponse} deve contenere:
 \begin{itemize}
     \item Un risultato di tipo \texttt{SchedulingResult} (vedi \ref{model:scheduling-result})
-    \item Una lista di \texttt{Order} (vedi \ref{model:order});
+    \item Un \textit{array} di \texttt{Order} (vedi \ref{model:order});
     \item Un intero che specifica l'identificativo dell'utente che deve ricevere la pianificazione.
 \end{itemize}
 \subsubsection{Definizione}
 \begin{listing}[H]
-\inputminted{python}{code/schedule_response.py}
+\inputminted[fontsize=\small, breaklines, bgcolor=mintedbackground, linenos=true]{python}{code/schedule_response.py}
 \caption{Definizione del modello ScheduleResponse}
 \label{listing:model-schedule-response}
 \end{listing}
@@ -233,15 +234,15 @@ In particolare ogni risposta deve contenere:
 \label{model:printer-schedule}
 \subsubsection{Scopo del modello}
 Questo \textit{modello} definisce e valida la schedulazione proposta per una singola stampante.
-In particolare, ogni schedulazione deve contenere:
+In particolare ogni oggetto di tipo \texttt{PrinterSchedule} deve contenere:
 \begin{itemize}
-    \item Una lista di \texttt{ScheduledJob} (vedi \ref{model:scheduled-job});
+    \item Un \textit{array} di \texttt{ScheduledJob} (vedi \ref{model:scheduled-job});
     \item Un intero che indica i minuti di ritardo accumulati su quella specifica stampante;
     \item Un intero che specifica il conteggio dei lavori pianificati su quella stampante.
 \end{itemize}
 \subsubsection{Definizione}
 \begin{listing}[H]
-\inputminted{python}{code/printer_schedule.py}
+\inputminted[fontsize=\small, breaklines, bgcolor=mintedbackground, linenos=true]{python}{code/printer_schedule.py}
 \caption{Definizione del modello PrinterSchedule}
 \label{listing:model-printer-schedule}
 \end{listing}
@@ -249,7 +250,7 @@ In particolare, ogni schedulazione deve contenere:
 \label{model:scheduled-job}
 \subsubsection{Scopo del modello}
 Questo \textit{modello} definisce e valida una singola istanza di un lavoro pianificato.
-In particolare ogni lavoro pianificato deve contenere:
+In particolare ogni oggetto di tipo \texttt{ScheduledJob} deve contenere:
 \begin{itemize}
     \item Una stringa che indica il nome del lavoro;
     \item Una stringa che indica il materiale;
@@ -263,7 +264,7 @@ In particolare ogni lavoro pianificato deve contenere:
 \end{itemize}
 \subsubsection{Definizione}
 \begin{listing}[H]
-\inputminted{python}{code/scheduled_job.py}
+\inputminted[fontsize=\small, breaklines, bgcolor=mintedbackground, linenos=true]{python}{code/scheduled_job.py}
 \caption{Definizione del modello ScheduledJob}
 \label{listing:model-scheduled-job}
 \end{listing}
@@ -281,7 +282,7 @@ In particolare ogni oggetto di tipo \texttt{Summary} deve contenere:
 \end{itemize}
 \subsubsection{Definizione}
 \begin{listing}[H]
-\inputminted{python}{code/summary.py}
+\inputminted[fontsize=\small, breaklines, bgcolor=mintedbackground, linenos=true]{python}{code/summary.py}
 \caption{Definizione del modello Summary}
 \label{listing:model-summary}
 \end{listing}
@@ -299,7 +300,7 @@ In particolare ogni oggetto di tipo \texttt{Job} deve contenere:
 \end{itemize}
 \subsubsection{Definizione}
 \begin{listing}[H]
-\inputminted{python}{code/job.py}
+\inputminted[fontsize=\small, breaklines, bgcolor=mintedbackground, linenos=true]{python}{code/job.py}
 \caption{Definizione del modello Job}
 \label{listing:model-job}
 \end{listing}
@@ -318,7 +319,7 @@ In particolare ogni oggetto di tipo \texttt{Order} deve contenere:
 \end{itemize}
 \subsubsection{Definizione}
 \begin{listing}[H]
-\inputminted{python}{code/order.py}
+\inputminted[fontsize=\small, breaklines, bgcolor=mintedbackground, linenos=true]{python}{code/order.py}
 \caption{Definizione del modello Order}
 \label{listing:model-order}
 \end{listing}
@@ -334,7 +335,7 @@ In particolare ogni oggetto di tipo \texttt{Plate} deve contenere:
 \end{itemize}
 \subsubsection{Definizione}
 \begin{listing}[H]
-\inputminted{python}{code/plate.py}
+\inputminted[fontsize=\small, breaklines, bgcolor=mintedbackground, linenos=true]{python}{code/plate.py}
 \caption{Definizione del modello Plate}
 \label{listing:model-plate}
 \end{listing}
@@ -349,7 +350,7 @@ In particolare ogni oggetto di tipo \texttt{PrinterMaterial} deve contenere:
 \end{itemize}
 \subsubsection{Definizione}
 \begin{listing}[H]
-\inputminted{python}{code/printer_material.py}
+\inputminted[fontsize=\small, breaklines, bgcolor=mintedbackground, linenos=true]{python}{code/printer_material.py}
 \caption{Definizione del modello PrinterMaterial}
 \label{listing:model-printer-material}
 \end{listing}
@@ -362,11 +363,11 @@ In particolare ogni ogni oggetto di tipo \texttt{PrinterWork} deve contenere:
     \item Un intero che indica l'identificativo dell'articolo;
     \item Una stringa che indica il nome dell'articolo;
     \item Un oggetto di tipo \texttt{PrinterMaterial} (vedi \ref{model:printer-material});
-    \item Una lista di oggetti di tipo \texttt{Plate} (vedi \ref{model:plate}) che indica i formati di piatti di stampa disponibili per l'articolo.
+    \item Un \textit{array} di oggetti di tipo \texttt{Plate} (vedi \ref{model:plate}) che indica i formati di piatti di stampa disponibili per l'articolo.
 \end{itemize}
 \subsubsection{Definizione}
 \begin{listing}[H]
-\inputminted{python}{code/printer_work.py}
+\inputminted[fontsize=\small, breaklines, bgcolor=mintedbackground, linenos=true]{python}{code/printer_work.py}
 \caption{Definizione del modello PrinterWork}
 \label{listing:model-printer-work}
 \end{listing}
@@ -381,7 +382,7 @@ In particolare ogni oggetto di tipo \texttt{Printer} deve contenere:
 \end{itemize}
 \subsubsection{Definizione}
 \begin{listing}[H]
-\inputminted{python}{code/printer.py}
+\inputminted[fontsize=\small, breaklines, bgcolor=mintedbackground, linenos=true]{python}{code/printer.py}
 \caption{Definizione del modello Printer}
 \label{listing:model-printer}
 \end{listing}
@@ -396,7 +397,7 @@ In particolare ogni oggetto di tipo \texttt{SchedulingResult} deve contenere:
 \end{itemize}
 \subsubsection{Definizione}
 \begin{listing}[H]
-\inputminted{python}{code/scheduling_result.py}
+\inputminted[fontsize=\small, breaklines, bgcolor=mintedbackground, linenos=true]{python}{code/scheduling_result.py}
 \caption{Definizione del modello SchedulingResult}
 \label{listing:model-scheduling-result}
 \end{listing}
@@ -416,10 +417,65 @@ In particolare ogni oggetto di tipo \texttt{TaskVariable} deve contenere:
 \end{itemize}
 \subsubsection{Definizione}
 \begin{listing}[H]
-\inputminted{python}{code/task_variable.py}
+\inputminted[fontsize=\small, breaklines, bgcolor=mintedbackground, linenos=true]{python}{code/task_variable.py}
 \caption{Definizione del modello TaskVariable}
 \label{listing:model-task-variable}
 \end{listing}
+\subsection{SchedulerConfig}
+\subsubsection{Scopo del modello}
+Questo \textit{modello} definisce la configurazione delle opzioni dello schedulatore.
+In particolare ogni oggetto di tipo \texttt{SchedulerConfig} deve contenere:
+\begin{itemize}
+    \item Un intero che indica quanti minuti possiede una giornata;
+    \item Un intero che indica dopo quanti minuti dall'inizio della giornata comincia il turno lavorativo;
+    \item Un intero che indica dopo quanti minuti dall'inizio della giornata finisce il turno lavorativo;
+    \item Un intero che indica la penalità per un cambio di materiale;
+    \item Un intero che indica la penalità per ogni minuto di ritardo accumulato;
+    \item Un intero che indica quanti minuti servono per un cambio piatto;
+    \item Un numero a virgola mobile che indica quanti secondi può impiegare il solutore per la ricerca della soluzione ottima;
+    \item Un valore booleano che indica se il solutore deve stampare a terminale il progresso della ricerca.
+\end{itemize}
+\subsubsection{Definizione}
+\begin{listing}[H]
+\inputminted[fontsize=\small, breaklines, bgcolor=mintedbackground, linenos=true]{python}{code/scheduler_config.py}
+\caption{Definizione del modello TaskVariable}
+\label{listing:model-task-variable}
+\end{listing}
+\section{Servizi}
+In questa sezione vengono descritti i \textit{servizi} più rilevanti.
+\subsection{OrderConversionService}
+\subsubsection{Scopo}
+Questo \textit{servizio} ha lo scopo di incapsulare la logica di conversione di un \textit{array} di oggetti di tipo \texttt{Order} ad un \textit{array} di oggetti di tipo \texttt{Job}, operazione necessaria 
+per ottenere tutti i possibili lavori da pianificare nella coda di stampa.
+Il metodo \texttt{convert\_orders\_to\_jobs} scansiona tutti gli ordini ricevuti come parametro, per ogni ordine controlla le tipologie di piatti stampabili per l'articolo richiesto
+e calcola quanti piatti sono necessari per completare la richiesta per ogni variante di piatto.
+Vengono poi costruiti gli oggetti di tipo \texttt{Job}, i quali potranno poi essere inseriti o meno nella coda di stampa in base alla richiesta.
+\subsubsection{Implementazione}
+\inputminted[fontsize=\small, breaklines, breakanywhere, bgcolor=mintedbackground, linenos=true]{python}{code/order_conversion_service.py}
+\captionof{listing}{Implementazione del servizio OrderConversionService}
+\subsection{SchedulingService}
+\subsubsection{Scopo}
+Questo \textit{servizio} ha lo scopo di orchestrare il processo di schedulazione.
+Il metodo \texttt{schedule\_with\_batches} prende come parametri un \textit{array} di \texttt{Job}, un \textit{array} di \texttt{Printer} e 
+un oggetto di tipo \texttt{OrderingAlg} per la scelta dell'alogirtmo da utilizzare (\textit{strategy pattern}).
+I lavori da pianificare vengono divisi in insiemi (detti \textit{batch}) di dimensione fissa, questa scelta implementativa permette di ottenere una soluzione
+qualitativamente inferiore a fronte di un forte incremento delle prestazioni, la dimensione dei batch rimane comunque configurabile attraverso la gestione delle \textit{variabili d'ambiente}.
+Ogni \textit{batch} viene poi pianificato separatamente e unito agli altri.
+Gli altri metodi presenti nella classe (qui omessi per semplicità) sono:
+\begin{itemize}
+    \item \texttt{\_\_get\_future\_capacity\_by\_order}: si occupa di calcolare la produzione possibile dei \textit{batch} futuri, per evitare sovra-produzione;
+    \item \texttt{\_\_merge\_schedules}: si occupa di unire due schedulazioni appartenenti a \textit{batch} differenti;
+    \item \texttt{\_\_get\_total\_material\_changes}: calcola il numero totale di cambi di materiale;
+    \item \texttt{\_\_get\_total\_makespan}: calcola il \textit{makespan} totale;
+    \item \texttt{\_\_split\_in\_batches}: divide l'\textit{array} di \texttt{Job} in \textit{batch};
+    \item \texttt{\_\_set\_summary}: imposta l'oggetto \texttt{Summary} della soluzione, inserendo delle informazioni riassuntive sulla pianificazione.
+\end{itemize}
+
+\subsubsection{Implementazione}
+\inputminted[fontsize=\small, breaklines, breakanywhere, bgcolor=mintedbackground, linenos=true]{python}{code/scheduling_service.py}
+\captionof{listing}{Implementazione del servizio SchedulingService}
+\section{Rotte API}
+\section{Funzionamento}
 \section{Sicurezza del sistema}
 \label{section:system-security}
 \newpage

@@ -456,7 +456,7 @@ Vengono poi costruiti gli oggetti di tipo \texttt{Job}, i quali potranno poi ess
 \subsection{SchedulingService}
 \subsubsection{Scopo}
 Questo \textit{servizio} ha lo scopo di orchestrare il processo di schedulazione.
-Il metodo \texttt{schedule\_with\_batches} prende come parametri un \textit{array} di \texttt{Job}, un \textit{array} di \texttt{Printer} e 
+Il metodo \texttt{schedule\_with\_batches} accetta come parametri un \textit{array} di \texttt{Job}, un \textit{array} di \texttt{Printer} e 
 un oggetto di tipo \texttt{OrderingAlg} per la scelta dell'alogirtmo da utilizzare (\textit{strategy pattern}).
 I lavori da pianificare vengono divisi in insiemi (detti \textit{batch}) di dimensione fissa, questa scelta implementativa permette di ottenere una soluzione
 qualitativamente inferiore a fronte di un forte incremento delle prestazioni, la dimensione dei batch rimane comunque configurabile attraverso la gestione delle \textit{variabili d'ambiente}.
@@ -474,6 +474,57 @@ Gli altri metodi presenti nella classe (qui omessi per semplicità) sono:
 \subsubsection{Implementazione}
 \inputminted[fontsize=\small, breaklines, breakanywhere, bgcolor=mintedbackground, linenos=true]{python}{code/scheduling_service.py}
 \captionof{listing}{Implementazione del servizio SchedulingService}
+\newpage
+\subsection{ORToolsPrintingScheduler}
+\subsubsection{Scopo}
+Questo \textit{servizio} ha lo scopo di utilizzare la libreria Google OR-Tools per istanziare le variabili necessarie per il modello CP-SAT, impostare i vincoli necessari,
+definire la funzione obiettivo e chiamare il solutore.
+Il servizio estende l'interfaccia \texttt{OrderingAlg}, pertanto definisce obbligatoriamente un metodo \texttt{schedule\_jobs} con i parametri descritti nella sezione \ref{listing:ordering-alg-py}.
+Tale metodo si occupa di calcolare l'orizzonte temporale della soluzione (tramite il metodo \texttt{\_\_calculate\_horizon}) e di istanziare i servizi necessari (\texttt{VariableManager}, \texttt{ConstraintManager}, \texttt{SolutionFormatter} e 
+\texttt{ObjectiveManager}) e orchestare le chiamate ai loro metodi pubblici.
+\subsubsection{Implementazione}
+\inputminted[fontsize=\small, breaklines, breakanywhere, bgcolor=mintedbackground, linenos=true]{python}{code/or_tools_printing_scheduler.py}
+\captionof{listing}{Implementazione del servizio ORToolsPrintingScheduler}
+\subsection{ConstraintManager}
+\subsubsection{Scopo}
+Questo \textit{servizio} ha lo scopo di dichiarare i vincoli della soluzione da trovare.
+Il metodo \texttt{add\_initial\_state\_constraints} accetta come parametri un dizionario che associa la tupla nome lavoro-nome stampante al corrispondente oggetto di tipo
+\texttt{TaskVariable}, un \textit{array} di \texttt{Printer} e un oggetto di tipo \texttt{SchedulingResult}.
+Il suo scopo è quello di assicurarsi mediante la definizione degli appositi vincoli che ogni lavoro sia pianificato dopo il suo predecessore e che tra due lavori consecutivi 
+passi il tempo necessario per il cambio piatto.
+Il metodo \texttt{add\_basic\_constraints} accetta come parametri un dizionario che associa la tupla nome lavoro-nome stampante al corrispondente oggetto di tipo
+\texttt{TaskVariable}, un \textit{array} di \texttt{Printer} e un \textit{array} di \texttt{Job}.
+Il suo scopo è quello di orchestrare le chiamate ai metodi privati \texttt{\_\_add\_assignment\_constraints}, \texttt{\_\_add\_no\_overlap\_constraints}, \texttt{\_\_add\_start\_time\_constraints} e \texttt{\_\_create\_precedence\_constraints},
+quest'ultimi si occupano, rispettivamente, di definire i vincoli che impongono che ogni lavoro sia pianificato su una sola stampante, non si sovrapponga con altri e che inizi durante la giornata lavorativa.
+
+Il metodo \texttt{add\_production\_constraints} accetta come parametri un dizionario che associa la tupla nome lavoro-nome stampante al corrispondente oggetto di tipo
+\texttt{TaskVariable}, un \textit{array} di \texttt{Printer}, un oggetto opzionale di tipo \texttt{SchedulingResult} e un dizionario che indica, per l'ordine specificato, quanti pezzi sono già previsti nei \textit{batch} successivi.
+Il suo scopo è quello di assicurarsi, mediante la definizione dei vincoli necessari, che la produzione copra la richiesta anche in caso di divisione in \textit{batch}.
+
+
+
+\subsubsection{Implementazione}
+\inputminted[fontsize=\small, breaklines, breakanywhere, bgcolor=mintedbackground, linenos=true]{python}{code/constraint_manger.py}
+\captionof{listing}{Implementazione del servizio ConstraintManager}
+\subsection{VariableManager}
+\subsubsection{Scopo}
+Questo \textit{servizio} ha lo scopo di convertire gli oggetti di tipo \texttt{Job} a degli oggetti di tipo \texttt{TaskVariable}.
+Il metodo \texttt{create\_variables} accetta come parametri un \textit{array} di \texttt{Job} e un \textit{array} di \texttt{Printer}.
+Per ogni coppia \texttt{Job-Printer} viene chiamato il metodo \texttt{\_\_create\_task\_variables} il quale si occupa della effettiva creazione dell'oggetto di tipo \texttt{TaskVariable}.
+\subsubsection{Implementazione}
+\inputminted[fontsize=\small, breaklines, breakanywhere, bgcolor=mintedbackground, linenos=true]{python}{code/variable_manager.py}
+\captionof{listing}{Implementazione del servizio VariableManager}
+\subsection{ObjectiveManager}
+\subsubsection{Scopo}
+Questo \textit{servizio} si occupa di gestire la definizione della \gls{objectiveFunctiong}.
+Il metodo \texttt{define\_objective} accetta come parametri un dizionario che associa la tupla nome lavoro-nome stampante al corrispondente oggetto di tipo
+\texttt{TaskVariable}, un \textit{array} di \texttt{Printer}, un \textit{array} di \texttt{Job}, una variabile booleana che indica se il \textit{batch} esaminato è l'ultimo,
+l'ultimo \textit{batch} pianificato, un dizionario che indica, per l'ordine specificato, quanti pezzi sono già previsti nei \textit{batch} successivi e l'ultimo \texttt{SchedulingResult} calcolato.
+Tale metodo si occupa quindi di orchestrare le chiamate ai metodi privati \texttt{\_\_add\_timing\_penalties}, \texttt{\_\_add\_makespan\_objective} e \texttt{\_\_add\_production\_objective} i quali si occupano
+rispettivamente di definire le penalità per i ritardi, aggiungere l'obiettivo di minimizzare il \textit{makespan} e minimizzare la sovraproduzione.
+\subsubsection{Implementazione}
+\inputminted[fontsize=\small, breaklines, breakanywhere, bgcolor=mintedbackground, linenos=true]{python}{code/objective_manager.py}
+\captionof{listing}{Implementazione del servizio ObjectiveManager}
 \section{Rotte API}
 \section{Funzionamento}
 \section{Sicurezza del sistema}

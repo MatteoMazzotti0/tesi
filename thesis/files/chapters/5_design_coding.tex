@@ -501,8 +501,6 @@ Il metodo \texttt{add\_production\_constraints} accetta come parametri un dizion
 \texttt{TaskVariable}, un \textit{array} di \texttt{Printer}, un oggetto opzionale di tipo \texttt{SchedulingResult} e un dizionario che indica, per l'ordine specificato, quanti pezzi sono già previsti nei \textit{batch} successivi.
 Il suo scopo è quello di assicurarsi, mediante la definizione dei vincoli necessari, che la produzione copra la richiesta anche in caso di divisione in \textit{batch}.
 
-
-
 \subsubsection{Implementazione}
 \inputminted[fontsize=\small, breaklines, breakanywhere, bgcolor=mintedbackground, linenos=true]{python}{code/constraint_manger.py}
 \captionof{listing}{Implementazione del servizio ConstraintManager}
@@ -525,8 +523,37 @@ rispettivamente di definire le penalità per i ritardi, aggiungere l'obiettivo d
 \subsubsection{Implementazione}
 \inputminted[fontsize=\small, breaklines, breakanywhere, bgcolor=mintedbackground, linenos=true]{python}{code/objective_manager.py}
 \captionof{listing}{Implementazione del servizio ObjectiveManager}
+\subsection{SolutionFormatter}
+\subsubsection{Scopo}
+Questo \textit{servizio} si occupa di gestire la formattazione della soluzione e la creazione dell'oggetto \texttt{SchedulingResult}.
+Il metodo \texttt{get\_solution\_dict} accetta come parametri l'istanza del solutore, un dizionario che associa la tupla nome lavoro-nome stampante al corrispondente oggetto di tipo
+\texttt{TaskVariable}, un \textit{array} di \texttt{Printer} e una variabile \texttt{status} che indica lo stato del solutore.
+Tale metodo si occupa quindi della costruizione della soluzione orchestrando le chiamate ai metodi \texttt{\_\_get\_status\_string}, \texttt{\_\_get\_printer\_schedule} e \texttt{\_\_update\_job\_start\_times} i quali si occupano,
+rispettivamente, di convertire lo stato del solutore in una stringa, di costruire l'oggetto \texttt{PrinterSchedule} e aggiornare gli oggetti \texttt{Job} originali con gli orari di avvio calcolati.
+\subsubsection{Implementazione}
+\inputminted[fontsize=\small, breaklines, breakanywhere, bgcolor=mintedbackground, linenos=true]{python}{code/solution_formatter.py}
+\captionof{listing}{Implementazione del servizio SolutionFormatter}
 \section{Rotte API}
-\section{Funzionamento}
+In questa sezione vengono descritte le rotte \textit{API} esposte dal sistema.
+\subsection{\texttt{/schedule}}
+\subsubsection{Scopo}
+Questa rotta \textit{API} accetta come parametro un oggetto di tipo \texttt{ScheduleRequest}.
+Se la validazione ha successo viene avviata una schedulazione.
+\subsubsection{Implementazione}
+\inputminted[fontsize=\small, breaklines, breakanywhere, bgcolor=mintedbackground, linenos=true]{python}{code/scheduling.py}
+\captionof{listing}{Implementazione della rotta \texttt{/schedule}}
+\subsection{\texttt{/token}}
+\subsubsection{Scopo}
+Questa rotta \textit{API} riceve come parametro le credenziali di un \textit{client} registrato e, se sono corrette, rilascia un nuovo \textit{JSON Web Token}.
+\subsubsection{Implementazione}
+\inputminted[fontsize=\small, breaklines, breakanywhere, bgcolor=mintedbackground, linenos=true]{python}{code/token.py}
+\captionof{listing}{Implementazione della rotta \texttt{/token}}
+\subsection{\texttt{/verifyToken}}
+\subsubsection{Scopo}
+Questa rotta \textit{API} riceve come parametro il \textit{JSON Web Token} inviato da un \textit{client} registrato e ne effettua la verifica.
+\subsubsection{Implementazione}
+\inputminted[fontsize=\small, breaklines, breakanywhere, bgcolor=mintedbackground, linenos=true]{python}{code/verify_token.py}
+\captionof{listing}{Implementazione della rotta \texttt{/verifyToken}}
 \section{Sicurezza del sistema}
 \label{section:system-security}
 \newpage

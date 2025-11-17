@@ -1,8 +1,3 @@
-#Import necessari
-from fastapi import APIRouter, Depends
-
-from app.dependencies.jwt.jwt_dependencies import jwt_dependencies
-
 #Definizione di un router API
 jwt = APIRouter() 
 #Rotta API per verificare il token

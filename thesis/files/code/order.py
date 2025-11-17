@@ -1,12 +1,3 @@
-from datetime import date
-from math import ceil
-
-from pydantic import BaseModel
-
-from .plate import Plate
-from .printer_work import PrinterWork
-
-
 class Order(BaseModel):
     id: int
     expiration_date: date

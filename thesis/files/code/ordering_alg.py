@@ -1,10 +1,3 @@
-from abc import ABC, abstractmethod
-from datetime import datetime
-from typing import Dict, List, Optional, Tuple
-
-from app.models import Job, Printer, SchedulingResult
-
-
 class OrderingAlg(ABC):
     @abstractmethod
     def schedule_jobs(

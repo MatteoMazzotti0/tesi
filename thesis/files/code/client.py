@@ -1,9 +1,3 @@
-from datetime import datetime
-
-from sqlalchemy import Boolean, Column, DateTime, func
-from sqlmodel import Field, SQLModel
-
-
 class Client(SQLModel, table=True):
     __tablename__ = "clients"
     id: int | None = Field(default=None, primary_key=True)

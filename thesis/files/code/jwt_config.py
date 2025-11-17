@@ -1,7 +1,3 @@
-import os
-from dataclasses import dataclass
-
-
 @dataclass
 class JWTConfig:
     secret_key: str = os.getenv("JWT_SECRET_KEY", "default-secret")

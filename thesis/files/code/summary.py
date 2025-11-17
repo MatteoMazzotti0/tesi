@@ -1,6 +1,3 @@
-from pydantic import BaseModel
-
-
 class Summary(BaseModel):
     total_delay_minutes: int
     total_jobs: int

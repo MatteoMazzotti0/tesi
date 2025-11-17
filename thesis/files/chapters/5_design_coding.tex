@@ -48,7 +48,7 @@ Supporta transazioni e indici, ed è integrato con l'applicazione tramite \texti
 \subsection{Base di dati del modulo di pianificazione}
 \label{planner-database}
 Assieme al tutor aziendale è stata presa la decisione di non utilizzare la base di dati del modulo di pianificazione per la persistenza dei risultati generati,
-questo perchè la coda di stampa viene visualizzata direttamente all'interno del software gestionale e risulta pertanto più semplice e intuitivo 
+questo perché la coda di stampa viene visualizzata direttamente all'interno del software gestionale e risulta pertanto più semplice e intuitivo 
 modificare direttamente il \textit{database} di quest'ultimo.
 La base di dati del modulo di pianificazione ha il solo compito di memorizzare i \gls{clientg} registrati e autorizzati a chiamare le
 \textit{API} esposte, a tale scopo è stata creata una sola tabella denominata \texttt{clients} e così strutturata:
@@ -59,7 +59,7 @@ La base di dati del modulo di pianificazione ha il solo compito di memorizzare i
     \item \texttt{created\_at}: campo di tipo \texttt{DateTime} per tracciare la data di registrazione.
     \item \texttt{is\_active}: valore booleano che indica se il client è abilitato, è valorizzato a \textit{true} di default.
 \end{itemize}
-Ciò permette, in futuro, di aggiungere eventuali altri \textit{client} autorizzati ad utilizzare il modulo.
+Ciò permette, in futuro, di aggiungere eventuali altri \textit{client} autorizzati a utilizzare il modulo.
 \subsection{Base di dati del software gestionale}
 La progettazione della base di dati è risultata fondamentale per permettere all'utente di visualizzare correttamente le code di stampa pianificate.
 Il software gestionale esistente (e già sviluppato al momento della codifica del progetto) possiede una base di dati già strutturata e utilizzata sia dall'azienda ospitante che da
@@ -259,7 +259,7 @@ In particolare ogni oggetto di tipo \texttt{ScheduledJob} deve contenere:
     \item Un intero che indica la durata della stampa in minuti;
     \item Un intero che indica il ritardo nella esecuzione del lavoro in minuti;
     \item Un oggetto di tipo \texttt{Order} (vedi \ref{model:order});
-    \item Un oggetto di tipo \texttt{datetime} che la scadenza del lavoro;
+    \item Un oggetto di tipo \texttt{datetime} che indica la scadenza del lavoro;
     \item Un oggetto di tipo \texttt{Plate} (vedi \ref{model:plate}).
 \end{itemize}
 \subsubsection{Definizione}
@@ -358,7 +358,7 @@ In particolare ogni oggetto di tipo \texttt{PrinterMaterial} deve contenere:
 \label{model:printer-work}
 \subsubsection{Scopo del modello}
 Questo \textit{modello} valida e definisce una singola istanza di un articolo da stampare.
-In particolare ogni ogni oggetto di tipo \texttt{PrinterWork} deve contenere:
+In particolare ogni oggetto di tipo \texttt{PrinterWork} deve contenere:
 \begin{itemize}
     \item Un intero che indica l'identificativo dell'articolo;
     \item Una stringa che indica il nome dell'articolo;
@@ -502,7 +502,7 @@ Il metodo \texttt{add\_production\_constraints} accetta come parametri un dizion
 Il suo scopo è quello di assicurarsi, mediante la definizione dei vincoli necessari, che la produzione copra la richiesta anche in caso di divisione in \textit{batch}.
 
 \subsubsection{Implementazione}
-\inputminted[fontsize=\small, breaklines, breakanywhere, bgcolor=mintedbackground, linenos=true]{python}{code/constraint_manger.py}
+\inputminted[fontsize=\small, breaklines, breakanywhere, bgcolor=mintedbackground, linenos=true]{python}{code/constraint_manager.py}
 \captionof{listing}{Implementazione del servizio ConstraintManager}
 \subsection{VariableManager}
 \subsubsection{Scopo}
@@ -555,5 +555,24 @@ Questa rotta \textit{API} riceve come parametro il \textit{JSON Web Token} invia
 \inputminted[fontsize=\small, breaklines, breakanywhere, bgcolor=mintedbackground, linenos=true]{python}{code/verify_token.py}
 \captionof{listing}{Implementazione della rotta \texttt{/verifyToken}}
 \section{Sicurezza del sistema}
+In questa sezione vengono descritte tutte le scelte implementative riguardanti la sicurezza del sistema.
+\subsection{Validazione delle richieste}
+Il \textit{framework} FastAPI mette a disposizione una validazione automatica delle richieste inviate alle rotte \textit{API}, tale procedura
+permette di scartare tutti gli input non conformi.
+\subsection{JSON Web Token}
+Per validare l'autore della richiesta è stata implementata una logica simile allo standard OAuth 2.0 Client Credentials Flow\footcite{site:oauth}.
+Il funzionamento di tale logica è il seguente:
+\begin{itemize}
+    \item Il \textit{client} che deve utilizzare il sistema invia le sue credenziali al modulo di pianificazione inserendo nel corpo della richiesta i valori \texttt{client\_id} e \texttt{client\_secret};
+    \item Il modulo di pianificazione valida le credenziali e risponde con un \textit{JSON Web Token} firmato con una chiave segreta tramite l'algoritmo \texttt{HS256};
+    \item Il \textit{client} può inserire nella intestazione della richiesta (detta anche \textit{header}) il \textit{JSON Web Token} ricevuto;
+    \item Il modulo di pianificazione può validare il \textit{JSON Web Token} verificando la firma utilizzando la chiave segreta.
+\end{itemize}
+Le differenze rispetto allo standard sono le seguenti:
+\begin{itemize}
+    \item Non viene effettuata la rotazione delle chiavi;
+    \item Il modulo di pianificazione svolge anche la funzione di \textit{authorization server};
+\end{itemize}
+È stato scelto assieme al tutor aziendale di non implementare lo standard nella sua totalità per riservare maggior tempo di sviluppo alle restanti funzionalità.
 \label{section:system-security}
 \newpage

@@ -1,3 +1,8 @@
+\input{glyphtounicode}
+\pdfgentounicode=1
+% Map minted line-break glyphs to Unicode to satisfy PDF/A
+\pdfglyphtounicode{arrowhookleft}{21A9}
+\pdfglyphtounicode{arrowhookright}{21AA}
 \DocumentMetadata{
     pdfstandard=A-3a,
     pdfversion=1.7,
@@ -21,14 +26,14 @@
 \begin{document}
     \frontmatter
     \input{preface/1_title_page}
-    \increasepagenumbering % increase the page numbrering by 1, in order to cout the frontispiece
+    \increasepagenumbering % increase the page numbering by 1, in order to count the frontispiece
     \input{preface/2_copyright}
     \input{preface/3_acknowledgements}
     \input{preface/4_abstract}
     \input{preface/5_table_of_contents}
     \printglossary[type=\acronymtype, title=Acronimi e abbreviazioni, toctitle=Acronimi e abbreviazioni]
     \printglossary[type=main, title=Glossario, toctitle=Glossario]
-    \blankpage % example of a blank page that also increases the page couter by 1
+    \blankpage % example of a blank page that also increases the page counter by 1
 
     \mainmatter
     \input{chapters/1_introduction}

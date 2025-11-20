@@ -77,7 +77,7 @@ Sono state aggiunte due tabelle per tracciare gli output della pianificazione e 
     \item \texttt{data}: campo \texttt{json} obbligatorio che memorizza il payload completo della soluzione;
     \item \texttt{is\_accepted}: boolean obbligatorio valorizzato di default a \textit{false} per indicare l'approvazione dell'utente;
     \item \texttt{created\_at}: campo di tipo \texttt{DateTime} per tracciare la data di ricezione del risultato;
-    \item \texttt{updated\_at}: campo di tipo \texttt{DateTime} per tracciare la data dell'ultima modifica risultato.
+    \item \texttt{updated\_at}: campo di tipo \texttt{DateTime} per tracciare la data dell'ultima modifica del risultato.
     \end{itemize}
     \item La tabella \texttt{scheduling\_results\_orders} così formata:
     \begin{itemize}
@@ -103,7 +103,7 @@ I \textit{layer} implementati all'interno del sistema sono i seguenti:
 \begin{itemize}
     \item \textit{API layer}: rappresenta la logica che riceve le richieste HTTP e orchestra le chiamate ai servizi disponibili;
     \item \textit{Business layer}: rappresenta la logica di business dell'applicazione, riceve i dati dall'\textit{API layer} ed effettua le operazioni necessarie;
-    \item \textit{Persistence layer}: rappresenta la connessione tra il \textit{business layer} e il \textit{database}, si occupa di eseguire le \textit{query} orchestrare l'utilizzo del \textit{Object-Relational Mapper};
+    \item \textit{Persistence layer}: rappresenta la connessione tra il \textit{business layer} e il \textit{database}, si occupa di eseguire le \textit{query} e orchestrare l'utilizzo del \textit{Object-Relational Mapper};
     \item \textit{Database layer}: rappresenta il \textit{database} dell'applicativo, dove i dati sono salvati e prelevati. 
 \end{itemize}
 Ogni \textit{layer} interagisce solo con i \textit{layer} sottostanti, pertanto è stato adottato un approccio di tipo \textit{closed layer}.
@@ -125,7 +125,7 @@ Questo approccio sposta all'esterno la creazione delle dipendenze, permettendo d
 \label{listing:jwt-dependencies-py}
 \end{listing}
 \subsection{Design pattern comportamentali}
-È stato usato lo \textit{strategy pattern} per definire una interfaccia per l'algoritmo di ordinamento.
+È stato usato lo \textit{strategy pattern} per definire un'interfaccia per l'algoritmo di ordinamento.
 Tale scelta permetterà in futuro, se necessario, di riscrivere completamente la logica di schedulazione mantenendo la compatibilità con la restante logica 
 del modulo, a patto che venga implementata la stessa interfaccia.
 La definizione viene fornita nel file \texttt{ordering\_alg.py}.
@@ -148,7 +148,7 @@ La lista dei parametri accettati è la seguente:
 il \textit{database}.
 L'adozione di questo \textit{design pattern} porta a diversi vantaggi, tra cui:
 \begin{itemize}
-    \item Semplifica la logica di accesso ai dati, esponendo una interfaccia consistente per la lettura e la scrittura;
+    \item Semplifica la logica di accesso ai dati, esponendo un'interfaccia consistente per la lettura e la scrittura;
     \item Migliora la testabilità del sistema, in quanto ogni \textit{repository} può essere sostituito facilmente da un \textit{mock};
     \item Migliora la pulizia e la leggibilità del codice;
     \item Permette di ridurre il tempo necessario ad un eventuale cambio di \textit{database}, in quanto necessiterebbe solo di una riscrittura delle classi \textit{repository}.
@@ -442,7 +442,7 @@ In particolare ogni oggetto di tipo \texttt{SchedulerConfig} deve contenere:
 \begin{listing}[H]
 \inputminted[fontsize=\small, breaklines, bgcolor=mintedbackground, linenos=true]{python}{code/scheduler_config.py}
 \caption{Definizione del modello TaskVariable}
-\label{listing:model-task-variable}
+\label{listing:model-scheduler-config}
 \end{listing}
 \section{Servizi}
 In questa sezione vengono descritti i \textit{servizi} più rilevanti.
@@ -511,7 +511,7 @@ Il suo scopo è quello di assicurarsi, mediante la definizione dei vincoli neces
 \subsubsection{Scopo}
 Questo \textit{servizio} ha lo scopo di convertire gli oggetti di tipo \texttt{Job} a degli oggetti di tipo \texttt{TaskVariable}.
 Il metodo \texttt{create\_variables} accetta come parametri un \textit{array} di \texttt{Job} e un \textit{array} di \texttt{Printer}.
-Per ogni coppia \texttt{Job-Printer} viene chiamato il metodo \texttt{\_\_create\_task\_variables} il quale si occupa della effettiva creazione dell'oggetto di tipo \texttt{TaskVariable}.
+Per ogni coppia \texttt{Job-Printer} viene chiamato il metodo \texttt{\_\_create\_task\_variables} il quale si occupa dell'effettiva creazione dell'oggetto di tipo \texttt{TaskVariable}.
 \subsubsection{Implementazione}
 \inputminted[fontsize=\small, breaklines, breakanywhere, bgcolor=mintedbackground, linenos=true]{python}{code/variable_manager.py}
 \captionof{listing}{Implementazione del servizio VariableManager}
@@ -531,7 +531,7 @@ rispettivamente di definire le penalità per i ritardi, aggiungere l'obiettivo d
 Questo \textit{servizio} si occupa di gestire la formattazione della soluzione e la creazione dell'oggetto \texttt{SchedulingResult}.
 Il metodo \texttt{get\_solution\_dict} accetta come parametri l'istanza del solutore, un dizionario che associa la tupla nome lavoro-nome stampante al corrispondente oggetto di tipo
 \texttt{TaskVariable}, un \textit{array} di \texttt{Printer} e una variabile \texttt{status} che indica lo stato del solutore.
-Tale metodo si occupa quindi della costruizione della soluzione orchestrando le chiamate ai metodi \texttt{\_\_get\_status\_string}, \texttt{\_\_get\_printer\_schedule} e \texttt{\_\_update\_job\_start\_times} i quali si occupano,
+Tale metodo si occupa quindi della costruzione della soluzione orchestrando le chiamate ai metodi \texttt{\_\_get\_status\_string}, \texttt{\_\_get\_printer\_schedule} e \texttt{\_\_update\_job\_start\_times} i quali si occupano,
 rispettivamente, di convertire lo stato del solutore in una stringa, di costruire l'oggetto \texttt{PrinterSchedule} e aggiornare gli oggetti \texttt{Job} originali con gli orari di avvio calcolati.
 \subsubsection{Implementazione}
 \inputminted[fontsize=\small, breaklines, breakanywhere, bgcolor=mintedbackground, linenos=true]{python}{code/solution_formatter.py}
@@ -568,7 +568,7 @@ Il funzionamento di tale logica è il seguente:
 \begin{itemize}
     \item Il \textit{client} che deve utilizzare il sistema invia le sue credenziali al modulo di pianificazione inserendo nel corpo della richiesta i valori \texttt{client\_id} e \texttt{client\_secret};
     \item Il modulo di pianificazione valida le credenziali e risponde con un \textit{JSON Web Token} firmato con una chiave segreta tramite l'algoritmo \texttt{HS256};
-    \item Il \textit{client} può inserire nella intestazione della richiesta (detta anche \textit{header}) il \textit{JSON Web Token} ricevuto;
+    \item Il \textit{client} può inserire nell'intestazione della richiesta (detta anche \textit{header}) il \textit{JSON Web Token} ricevuto;
     \item Il modulo di pianificazione può validare il \textit{JSON Web Token} verificando la firma utilizzando la chiave segreta.
 \end{itemize}
 Le differenze rispetto allo standard sono le seguenti:
@@ -595,20 +595,20 @@ Il test si considera superato se il modulo pianifica correttamente l'ordine senz
 \subsection{Test 2: ordini con materiali diversi}
 \subsubsection{Scopo}
 Questo test ha lo scopo di validare la capacità di pianificare due ordini di produzione composti da prodotti stampati con due materiali differenti.
-Il test si considera superato se il modulo pianifica correttamente l'ordine senza errori e minimizzando i numeri di cambio materiale.
+Il test si considera superato se il modulo pianifica correttamente l'ordine senza errori e minimizzando il numero di cambi di materiale.
 \subsubsection{Implementazione}
 \inputminted[fontsize=\small, breaklines, breakanywhere, bgcolor=mintedbackground, linenos=true]{python}{code/test_materials_optimization.py}
 \captionof{listing}{Implementazione del test ordini con materiali diversi}
 \subsection{Test 3: ordine urgente}
 \subsubsection{Scopo}
-Questo test ha lo scopo di validare la capacità di due ordini di produzione di cui uno urgente.
+Questo test ha lo scopo di validare la capacità di pianificare due ordini di produzione, di cui uno urgente.
 Il test si considera superato se il modulo pianifica correttamente l'ordine senza errori e minimizzando i ritardi.
 \subsubsection{Implementazione}
 \inputminted[fontsize=\small, breaklines, breakanywhere, bgcolor=mintedbackground, linenos=true]{python}{code/test_urgent_order.py}
 \captionof{listing}{Implementazione del test ordine urgente}
 \subsection{Test 4: ordine parziale}
 \subsubsection{Scopo}
-Questo test ha lo scopo di validare la capacità di un ordine parziale.
+Questo test ha lo scopo di validare la capacità di pianificare un ordine parziale.
 Il test si considera superato se il modulo pianifica correttamente l'ordine senza errori e calcolando correttamente i pezzi da stampare.
 \subsubsection{Implementazione}
 \inputminted[fontsize=\small, breaklines, breakanywhere, bgcolor=mintedbackground, linenos=true]{python}{code/test_partial_order.py}

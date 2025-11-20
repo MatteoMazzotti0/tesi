@@ -14,11 +14,13 @@ Permette di installare e gestire le librerie attraverso pip, un gestore di pacch
 \textit{Framework} web per la codifica di \textit{API} basato su Python\footcite{site:python}.
 Offre elevate prestazioni, validazione dell'input attraverso l'utilizzo della libreria Pydantic\footcite{site:pydantic} e 
 documentazione automatica seguendo lo standard OpenAPI\footcite{site:openapi}.
+\subsubsection{Pytest}
+\textit{Framework} che permette la scrittura e l'esecuzione di \gls{unitTestg}, \gls{functionalTestg} e \gls{integrationTestg}.
 \subsection{Librerie}
 \subsubsection{Black}
-Libreria che permette di formattare il codice Python, utilizzata per imporre un \gls{codestyleg} unico e automatizzabile.
+Libreria che permette di formattare il codice Python, utilizzata per imporre un \gls{codestyleg} unico e ripetibile.
 \subsubsection{isort}
-Libreria che permette di formattare le importazioni delle librerie Python, utilizzata per imporre un \textit{codestyle} unico e automatizzabile.
+Libreria che permette di formattare le importazioni delle librerie Python, utilizzata per imporre un \textit{codestyle} unico e ripetibile.
 \subsubsection{SQLModel}
 Libreria che permette di interagire con basi di dati relazionali attraverso il codice scritto in Python con 
 la tecnica di programmazione \gls{orm}.
@@ -166,7 +168,8 @@ La struttura delle cartelle adottata per il progetto è la seguente:
             \item \texttt{interfaces}: cartella che contiene i file che dichiarano le interfacce;
             \item \texttt{models}: cartella che contiene i file che dichiarano i \textit{modelli}, ovvero le classi che rappresentano le entità di dominio, validano i dati in ingresso e definiscono lo schema persistito nel database;
             \item \texttt{repositories}: cartella che contiene i file che dichiarano i \textit{repository} usati per leggere e/o scrivere dati nel \textit{database};
-            \item \texttt{services}: cartella che contiene le classi che contengono tutta la \gls{businessLogicg} dell'applicazione.
+            \item \texttt{services}: cartella che contiene le classi che contengono tutta la \gls{businessLogicg} dell'applicazione;
+            \item \texttt{tests}: cartella che contiene i \textit{test funzionali} prodotti.
         \end{itemize}
     \end{itemize}
 \end{itemize}
@@ -457,7 +460,7 @@ Vengono poi costruiti gli oggetti di tipo \texttt{Job}, i quali potranno poi ess
 \subsubsection{Scopo}
 Questo \textit{servizio} ha lo scopo di orchestrare il processo di schedulazione.
 Il metodo \texttt{schedule\_with\_batches} accetta come parametri un \textit{array} di \texttt{Job}, un \textit{array} di \texttt{Printer} e 
-un oggetto di tipo \texttt{OrderingAlg} per la scelta dell'alogirtmo da utilizzare (\textit{strategy pattern}).
+un oggetto di tipo \texttt{OrderingAlg} per la scelta dell'algoritmo da utilizzare (\textit{strategy pattern}).
 I lavori da pianificare vengono divisi in insiemi (detti \textit{batch}) di dimensione fissa, questa scelta implementativa permette di ottenere una soluzione
 qualitativamente inferiore a fronte di un forte incremento delle prestazioni, la dimensione dei batch rimane comunque configurabile attraverso la gestione delle \textit{variabili d'ambiente}.
 Ogni \textit{batch} viene poi pianificato separatamente e unito agli altri.
@@ -575,4 +578,88 @@ Le differenze rispetto allo standard sono le seguenti:
 \end{itemize}
 È stato scelto assieme al tutor aziendale di non implementare lo standard nella sua totalità per riservare maggior tempo di sviluppo alle restanti funzionalità.
 \label{section:system-security}
+
+\section{Verifica e validazione}
+L'ultimo periodo dello stage è stato dedicato alla fase di verifica e validazione di quanto prodotto.
+Tale pratica consiste nella scrittura ed esecuzione di \textit{test di unità}, \textit{test funzionali} e \textit{test di integrazione} dedicati a verificare la copertura dei requisiti
+e il funzionamento del sistema.
+Il tempo a disposizione non è stato sufficiente alla scrittura di una suite completa di test, tuttavia sono stati scritti alcuni \textit{test funzionali} dedicati a verificare 
+il funzionamento dello schedulatore e il rispetto dei principali vincoli.
+\subsection{Test 1: ordine singolo}
+\subsubsection{Scopo}
+Questo test ha lo scopo di validare la capacità di pianificare un singolo ordine di produzione.
+Il test si considera superato se il modulo pianifica correttamente l'ordine senza errori.
+\subsubsection{Implementazione}
+\inputminted[fontsize=\small, breaklines, breakanywhere, bgcolor=mintedbackground, linenos=true]{python}{code/test_single_order.py}
+\captionof{listing}{Implementazione del test ordine singolo}
+\subsection{Test 2: ordini con materiali diversi}
+\subsubsection{Scopo}
+Questo test ha lo scopo di validare la capacità di pianificare due ordini di produzione composti da prodotti stampati con due materiali differenti.
+Il test si considera superato se il modulo pianifica correttamente l'ordine senza errori e minimizzando i numeri di cambio materiale.
+\subsubsection{Implementazione}
+\inputminted[fontsize=\small, breaklines, breakanywhere, bgcolor=mintedbackground, linenos=true]{python}{code/test_materials_optimization.py}
+\captionof{listing}{Implementazione del test ordini con materiali diversi}
+\subsection{Test 3: ordine urgente}
+\subsubsection{Scopo}
+Questo test ha lo scopo di validare la capacità di due ordini di produzione di cui uno urgente.
+Il test si considera superato se il modulo pianifica correttamente l'ordine senza errori e minimizzando i ritardi.
+\subsubsection{Implementazione}
+\inputminted[fontsize=\small, breaklines, breakanywhere, bgcolor=mintedbackground, linenos=true]{python}{code/test_urgent_order.py}
+\captionof{listing}{Implementazione del test ordine urgente}
+\subsection{Test 4: ordine parziale}
+\subsubsection{Scopo}
+Questo test ha lo scopo di validare la capacità di un ordine parziale.
+Il test si considera superato se il modulo pianifica correttamente l'ordine senza errori e calcolando correttamente i pezzi da stampare.
+\subsubsection{Implementazione}
+\inputminted[fontsize=\small, breaklines, breakanywhere, bgcolor=mintedbackground, linenos=true]{python}{code/test_partial_order.py}
+\captionof{listing}{Implementazione del test ordine parziale}
+\subsection{Test 5: test vincoli di orario}
+\subsubsection{Scopo}
+Questo test ha lo scopo di validare la capacità di rispettare i vincoli di orario.
+Il test si considera superato se il modulo pianifica correttamente l'ordine senza errori e rispettando i vincoli di orario.
+\subsubsection{Implementazione}
+\inputminted[fontsize=\small, breaklines, breakanywhere, bgcolor=mintedbackground, linenos=true]{python}{code/test_time_constraints.py}
+\captionof{listing}{Implementazione del test vincoli di orario}
+\subsection{Test 6: test scelta del piatto}
+\subsubsection{Scopo}
+Questo test ha lo scopo di validare la capacità di scegliere il piatto più adatto per minimizzare gli sprechi.
+Il test si considera superato se il modulo pianifica correttamente l'ordine senza errori e minimizzando gli sprechi.
+\subsubsection{Implementazione}
+\inputminted[fontsize=\small, breaklines, breakanywhere, bgcolor=mintedbackground, linenos=true]{python}{code/test_plate_choice.py}
+\captionof{listing}{Implementazione del test scelta del piatto}
+\subsection{Test 7: test nessuna stampante disponibile}
+\subsubsection{Scopo}
+Questo test ha lo scopo di gestire il caso in cui non vi sia alcuna stampante disponibile.
+Il test si considera superato se il modulo ritorna un errore.
+\subsubsection{Implementazione}
+\inputminted[fontsize=\small, breaklines, breakanywhere, bgcolor=mintedbackground, linenos=true]{python}{code/test_no_printer.py}
+\captionof{listing}{Implementazione del test nessuna stampante disponibile}
+\subsection{Esecuzione dei test}
+Per eseguire i test è necessario aprire il terminale, navigare all'interno della cartella del progetto ed eseguire il comando \texttt{pytest}.
+I risultati sono i seguenti:
+\begin{table}[htbp]
+    \centering
+    \rowcolors{1}{}{tableGray}
+    \begin{tabular}{|p{7cm}|p{2cm}|}
+    \hline
+    \multicolumn{1}{|c|}{\textbf{Test}} & \multicolumn{1}{c|}{\textbf{Esito}} \\
+    \hline
+    test\_materials\_optimization.py & Passato \\
+    \hline
+    test\_no\_printer.py & Passato \\
+    \hline
+    test\_partial\_order.py & Passato \\
+    \hline
+    test\_plate\_choice.py & Passato \\
+    \hline
+    test\_single\_order.py & Passato \\
+    \hline
+    test\_time\_constraints.py & Passato \\
+    \hline
+    test\_urgent\_order.py & Passato \\
+    \hline
+    \end{tabular}
+    \caption{Tabella dei risultati dei test Pytest.}
+    \label{tab:pytest-tests}
+\end{table}
 \newpage

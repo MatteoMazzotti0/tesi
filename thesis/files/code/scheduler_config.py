@@ -1,7 +1,7 @@
 @dataclass
 class SchedulerConfig:
     """
-    Classe che gestisce la configurazioen dello scheduler
+    Classe che gestisce la configurazione dello scheduler
     """
 
     minutes_per_day: int = int(os.getenv("MINUTES_PER_DAY", 24 * 60))

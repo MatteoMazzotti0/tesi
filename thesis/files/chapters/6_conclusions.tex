@@ -1,0 +1,76 @@
+\chapter{Conclusioni}
+\label{chap:conclusioni}
+\section{Copertura dei requisiti}
+La seguente tabella riporta la copertura dei requisiti, ovvero un resoconto completo dei requisiti soddisfatti e non soddisfatti.
+\begin{table}[htbp]
+    \centering
+    \rowcolors{1}{}{tableGray}
+    \begin{tabular}{|p{2.75cm}|p{2.75cm}|}
+    \hline
+    \multicolumn{1}{|c|}{\textbf{Identificativo}} & \multicolumn{1}{c|}{\textbf{Soddisfatto}} \\
+    \hline
+    RO0 & Sì\\
+    \hline 
+    RO1 & Sì \\
+    \hline 
+    RO2 & Sì  \\
+    \hline 
+    RO3 & Sì  \\
+    \hline 
+    RO4 & Sì  \\
+    \hline 
+    RO5 & Sì  \\
+    \hline 
+    RO6 & Sì  \\
+    \hline 
+    RO7 & Sì  \\
+    \hline 
+    RO8 & Sì  \\
+    \hline 
+    RO9 & Sì   \\
+    \hline 
+    RO10 & Sì \\
+    \hline 
+    RO11 & Sì \\
+    \hline 
+    RO12 & Sì \\
+    \hline
+    RD0 & Sì  \\
+    \hline
+    RD1 & Sì  \\
+    \hline
+    RD2 & No   \\
+    \hline
+    RD3 & No   \\
+    \hline
+    RD4 & Sì   \\
+    \hline
+    RD5 & Sì   \\
+    \hline
+    RF0 & No   \\
+    \hline
+    RF1 & No  \\
+    \hline
+    RF2 & No  \\
+    \hline
+    \end{tabular}
+    \caption{Tabella del tracciamento del soddisfacimento dei requisiti.}
+    \label{tab:desirable-requirements}
+\end{table}
+\section{Analisi del prodotto}
+In questa sezione viene presentata un'analisi critica del prodotto consegnato all'azienda ospitante.
+\subsection{Prodotto}
+Il prodotto sviluppato rappresenta sicuramente un buon contributo all'automazione della gestione degli ordini di produzione.
+Il sistema è stato integrato correttamente con il software gestionale esistente ed è quindi immediatamente utilizzabile dall'azienda.
+È possibile inoltre continuare ad estendere e a migliorare il codice, in quanto sono stati adottati \textit{design pattern} specifici per aumentare 
+la manutenibilità.
+Uno dei punti critici dello schedulatore è sicuramente rappresentato dalle sue prestazioni, in quanto il sistema impiega molto tempo per il calcolo di una soluzione ottima.
+L'implementazione del \textit{batching} riesce a mitigare il problema, a patto che una soluzione sub-ottima sia sufficiente per l'utente.
+Non è stato inoltre possibile, per mancanza di tempo, valutare la differenza media tra una soluzione ottima e una soluzione sub-ottima.
+\subsubsection{Miglioramenti}
+Il prodotto consegnato può essere migliorato nei seguenti modi:
+\begin{itemize}
+    \item Implementazione dei requisiti desiderabili e facoltativi mancanti;
+    \item Miglioramento delle performance tramite ottimizzazione del numero di variabili generate.
+\end{itemize}
+\newpage

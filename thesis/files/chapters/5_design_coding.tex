@@ -202,11 +202,11 @@ La figura \ref{fig:sequence} riassume il funzionamento del sistema.
 \begin{figure}[H]
 	\centering
 	\includegraphics[alt={Diagramma di sequenza del funzionamento del sistema}, width=0.8\columnwidth]{img/sequence.png}
-	\caption{Duyiagramma di sequenza del funzionamento del sistema.}
+	\caption{Diagramma di sequenza del funzionamento del sistema}
 	\label{fig:sequence}
 \end{figure}
 \subsection{Panoramica dell'algoritmo}
-Una volta ricevuta una richiesta di schedulazione il sistema esegue le seguenti operazioni:
+Una volta ricevuta una richiesta di schedulazione, il sistema esegue le seguenti operazioni:
 \begin{itemize}
     \item L'\textit{API layer} valida la richiesta e utilizza la logica contenuta nella classe \texttt{SchedulingService} per avviare la pianificazione;
     \item Gli ordini ricevuti vengono convertiti in lavori da pianificare e divisi in insiemi di dimensione intera e fissata denominati \textit{batch};
@@ -218,13 +218,13 @@ Una volta ricevuta una richiesta di schedulazione il sistema esegue le seguenti 
         \item La soluzione parziale viene formattata correttamente grazie alla logica contenuta nella classe \texttt{SolutionFormatter};
     \end{itemize}
     \item Le soluzioni parziali vengono combinate per ottenere la soluzione finale;
-    \item La soluzione viene restitutita all'\textit{API layer} il quale la invia al software gestionale.
+    \item La soluzione viene restituita all'\textit{API layer} il quale la invia al software gestionale.
 \end{itemize}
 La figura \ref{fig:alg-sequence} riassume il funzionamento dell'algoritmo.
 \begin{figure}[H]
 	\centering
 	\includegraphics[alt={Diagramma di sequenza del funzionamento dell'algoritmo di ordinamento}, width=\columnwidth]{img/sequence_2.png}
-	\caption{Diagramma di sequenza del funzionamento dell'algoritmo di ordinamento.}
+	\caption{Diagramma di sequenza del funzionamento dell'algoritmo di ordinamento}
 	\label{fig:alg-sequence}
 \end{figure}
 
@@ -237,7 +237,7 @@ La struttura di questo \textit{modello} definisce la tabella \texttt{clients} (v
 \subsubsection{Definizione}
 \begin{listing}[H]
 \inputminted[fontsize=\small, breaklines, bgcolor=mintedbackground, linenos=true]{python}{code/client.py}
-\caption{Definizione del model Client}
+\caption{Definizione del modello Client}
 \label{listing:model-client}
 \end{listing}
 \subsection{JWTConfig}
@@ -246,7 +246,7 @@ Questo \textit{modello} definisce ed espone la configurazione dei \textit{JSON W
 \subsubsection{Definizione}
 \begin{listing}[H]
 \inputminted[fontsize=\small, breaklines, bgcolor=mintedbackground, linenos=true]{python}{code/jwt_config.py}
-\caption{Definizione del model JWTConfig}
+\caption{Definizione del modello JWTConfig}
 \label{listing:model-jwt-config}
 \end{listing}
 \subsection{ScheduleRequest}

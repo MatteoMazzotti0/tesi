@@ -21,7 +21,7 @@
 *.lol
 *.acr
 *.alg
-
+.vscode
 minted-caches
 svg-inkscape
 settings.json

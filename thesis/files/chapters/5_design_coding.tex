@@ -181,6 +181,53 @@ La struttura delle cartelle del progetto è illustrata nella figura \ref{fig:fol
 	\label{fig:folders-struct}
 \end{figure}
 
+\section{Funzionamento del sistema}
+In questa sezione viene descritto il funzionamento del sistema. 
+\subsection{Panoramica architetturale}
+Nel suo insieme, il sistema è composto da due componenti principali e indipendenti:
+\begin{itemize}
+    \item Il software gestionale;
+    \item Il modulo di pianificazione.
+\end{itemize}
+Il funzionamento del sistema può essere riassunto nei seguenti passaggi:
+\begin{itemize}
+    \item L'utente attraverso il software gestionale richiede una pianificazione selezionando gli ordini non completati;
+    \item Il software gestionale invia una richiesta \textit{API} con le proprie credenziali al modulo di pianificazione, richiedendo il \textit{JSON Web Token};
+    \item Il modulo di pianificazione valida le credenziali e risponde con il \textit{JSON Web Token};
+    \item Il software gestionale invia una richiesta \textit{API} al modulo di pianificazione, richiedendo la pianificazione;
+    \item Il modulo di pianificazione elabora la richiesta ed invia una richiesta \textit{API} contenente il risultato al software gestionale;
+    \item Il software gestionale salva la pianificazione proposta nel \textit{database}.
+\end{itemize}
+La figura \ref{fig:sequence} riassume il funzionamento del sistema.
+\begin{figure}[H]
+	\centering
+	\includegraphics[alt={Diagramma di sequenza del funzionamento del sistema}, width=0.8\columnwidth]{img/sequence.png}
+	\caption{Duyiagramma di sequenza del funzionamento del sistema.}
+	\label{fig:sequence}
+\end{figure}
+\subsection{Panoramica dell'algoritmo}
+Una volta ricevuta una richiesta di schedulazione il sistema esegue le seguenti operazioni:
+\begin{itemize}
+    \item L'\textit{API layer} valida la richiesta e utilizza la logica contenuta nella classe \texttt{SchedulingService} per avviare la pianificazione;
+    \item Gli ordini ricevuti vengono convertiti in lavori da pianificare e divisi in insiemi di dimensione intera e fissata denominati \textit{batch};
+    \item Per ogni \textit{batch}:
+    \begin{itemize}
+        \item Vengono create le variabili necessarie grazie alla logica contenuta nella classe \texttt{VariableManager};
+        \item Vengono applicati i vincoli grazie alla logica contenuta nella classe \texttt{ConstraintManager};
+        \item Viene calcolata la soluzione parziale grazie alla libreria Google OR-Tools;
+        \item La soluzione parziale viene formattata correttamente grazie alla logica contenuta nella classe \texttt{SolutionFormatter};
+    \end{itemize}
+    \item Le soluzioni parziali vengono combinate per ottenere la soluzione finale;
+    \item La soluzione viene restitutita all'\textit{API layer} il quale la invia al software gestionale.
+\end{itemize}
+La figura \ref{fig:alg-sequence} riassume il funzionamento dell'algoritmo.
+\begin{figure}[H]
+	\centering
+	\includegraphics[alt={Diagramma di sequenza del funzionamento dell'algoritmo di ordinamento}, width=\columnwidth]{img/sequence_2.png}
+	\caption{Diagramma di sequenza del funzionamento dell'algoritmo di ordinamento.}
+	\label{fig:alg-sequence}
+\end{figure}
+
 \section{Lista dei modelli}
 In questa sezione vengono descritti tutti i \textit{modelli}.
 \subsection{Client}
@@ -457,6 +504,7 @@ Vengono poi costruiti gli oggetti di tipo \texttt{Job}, i quali potranno poi ess
 \inputminted[fontsize=\small, breaklines, breakanywhere, bgcolor=mintedbackground, linenos=true]{python}{code/order_conversion_service.py}
 \captionof{listing}{Implementazione del servizio OrderConversionService}
 \subsection{SchedulingService}
+\label{subsection:scheduling-service}
 \subsubsection{Scopo}
 Questo \textit{servizio} ha lo scopo di orchestrare il processo di schedulazione.
 Il metodo \texttt{schedule\_with\_batches} accetta come parametri un \textit{array} di \texttt{Job}, un \textit{array} di \texttt{Printer} e 
@@ -479,6 +527,7 @@ Gli altri metodi presenti nella classe (qui omessi per semplicità) sono:
 \captionof{listing}{Implementazione del servizio SchedulingService}
 \newpage
 \subsection{ORToolsPrintingScheduler}
+\label{subsection:or-tools-printing-scheduler}
 \subsubsection{Scopo}
 Questo \textit{servizio} ha lo scopo di utilizzare la libreria Google OR-Tools per istanziare le variabili necessarie per il modello CP-SAT, impostare i vincoli necessari,
 definire la funzione obiettivo e chiamare il solutore.

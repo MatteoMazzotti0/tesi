@@ -184,17 +184,17 @@ La struttura delle cartelle del progetto è illustrata nella figura \ref{fig:fol
 \section{Funzionamento del sistema}
 In questa sezione viene descritto il funzionamento del sistema. 
 \subsection{Panoramica architetturale}
-Nel suo insieme, il sistema è composto da due componenti principali e indipendenti:
+Nel suo insieme, il sistema è composto da due componenti indipendenti:
 \begin{itemize}
     \item Il software gestionale;
     \item Il modulo di pianificazione.
 \end{itemize}
 Il funzionamento del sistema può essere riassunto nei seguenti passaggi:
 \begin{itemize}
-    \item L'utente attraverso il software gestionale richiede una pianificazione selezionando gli ordini non completati;
-    \item Il software gestionale invia una richiesta \textit{API} con le proprie credenziali al modulo di pianificazione, richiedendo il \textit{JSON Web Token};
-    \item Il modulo di pianificazione valida le credenziali e risponde con il \textit{JSON Web Token};
-    \item Il software gestionale invia una richiesta \textit{API} al modulo di pianificazione, richiedendo la pianificazione;
+    \item L'utente, attraverso il software gestionale, richiede una pianificazione selezionando gli ordini non completati;
+    \item Il software gestionale invia una richiesta \textit{API} con le proprie credenziali al modulo di pianificazione;
+    \item Se le credenziali sono corrette il software gestionale ottiene il \textit{JSON Web Token};
+    \item Il software gestionale invia una richiesta \textit{API} al modulo di pianificazione, richiedendo la pianificazione e utilizzando il \textit{JSON Web Token} per autenticarsi;
     \item Il modulo di pianificazione elabora la richiesta ed invia una richiesta \textit{API} contenente il risultato al software gestionale;
     \item Il software gestionale salva la pianificazione proposta nel \textit{database}.
 \end{itemize}
